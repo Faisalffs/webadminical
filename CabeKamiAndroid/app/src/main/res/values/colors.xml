@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Palet warna disinkronkan dengan tema toko online Cabe Kami -->
+    <color name="primary">#0d6efd</color> <!-- Biru Terang -->
+    <color name="primary_dark">#0b5ed7</color>
+    <color name="bg_main">#FFFFFF</color> <!-- Latar belakang putih bersih -->
+    <color name="bg_dark">#0B0F19</color> <!-- Slate 950 untuk status bar dark mode -->
+    <color name="accent">#22c55e</color> <!-- Hijau Sukses -->
+    
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Background untuk adaptive icon Cabe Kami -->
+    <color name="ic_launcher_background">#FFFFFF</color>
+</resources>

@@ -1,0 +1,49 @@
+<!-- Legacy fallback: A high-quality vector drawable for older versions -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Dark background layer -->
+    <path
+        android:fillColor="#0F172A"
+        android:pathData="M54,0 C83.8,0 108,24.2 108,54 C108,83.8 83.8,108 54,108 C24.2,108 0,83.8 0,54 C0,24.2 24.2,0 54,0 Z"/>
+    
+    <!-- Outer Smart Tech Ring -->
+    <path
+        android:strokeColor="#10B981"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.3"
+        android:pathData="M54,16 C74.9,16 92,33.1 92,54 C92,74.9 74.9,92 54,92 C33.1,92 16,74.9 16,54" />
+        
+    <!-- Main Leaf Body -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M54,28 C41,28 35,42 35,54 C35,66 45,74 54,74 C63,74 73,66 73,54 C73,42 67,28 54,28 Z"/>
+        
+    <!-- Leaf Center Stem -->
+    <path
+        android:fillColor="#064E3B"
+        android:pathData="M54,28 L54,74 C54,74 54.5,62 59,54 C54.5,46 54,28 54,28 Z"/>
+        
+    <!-- Smart Nodes / Circles representing IoT/sensors -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 54,39 A 3,3 0 1,1 54,45 A 3,3 0 1,1 54,39 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 46,49.5 A 2.5,2.5 0 1,1 46,54.5 A 2.5,2.5 0 1,1 46,49.5 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 62,49.5 A 2.5,2.5 0 1,1 62,54.5 A 2.5,2.5 0 1,1 62,49.5 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 54,59 A 3,3 0 1,1 54,65 A 3,3 0 1,1 54,59 Z"/>
+        
+    <!-- IoT Connecting lines -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1"
+        android:pathData="M54,42 L46,52 M54,42 L62,52 M46,52 L54,62 M62,52 L54,62 M54,42 L54,62"/>
+</vector>

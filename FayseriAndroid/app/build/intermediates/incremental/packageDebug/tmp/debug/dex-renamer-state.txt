@@ -1,0 +1,10 @@
+#Fri May 29 16:35:11 ICT 2026
+base.0=E\:\\belajar coding\\FayseriProject\\FayseriAndroid\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=E\:\\belajar coding\\FayseriProject\\FayseriAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.2=E\:\\belajar coding\\FayseriProject\\FayseriAndroid\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\3\\classes.dex
+path.0=classes.dex
+path.1=0/classes.dex
+path.2=3/classes.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex
+renamed.2=classes3.dex

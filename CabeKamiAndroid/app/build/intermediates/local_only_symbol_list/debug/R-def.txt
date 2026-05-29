@@ -1,0 +1,23 @@
+R_DEF: Internal format may change without notice
+local
+color accent
+color bg_dark
+color bg_main
+color black
+color ic_launcher_background
+color primary
+color primary_dark
+color white
+drawable bg_refresh_button
+drawable btn_refresh_bg
+drawable ic_launcher
+drawable ic_launcher_foreground
+drawable ic_refresh
+id webview
+layout activity_main
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Theme.CabeKami
+style Theme.CabeKami.Fullscreen
+xml network_security_config

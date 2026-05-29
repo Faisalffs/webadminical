@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\xml_network_security_config.xml.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\xml\\network_security_config.xml"
+    },
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\mipmap_ic_launcher.xml.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\mipmap\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\mipmap_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\mipmap\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\drawable_bg_refresh_button.xml.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\drawable\\bg_refresh_button.xml"
+    },
+    {
+        "merged": "com.faesa.fayseri.app-merged_res-31:/drawable_btn_refresh_bg.xml.flat",
+        "source": "com.faesa.fayseri.app-main-33:/drawable/btn_refresh_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\drawable_ic_launcher.png.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\drawable\\ic_launcher.png"
+    },
+    {
+        "merged": "com.faesa.fayseri.app-merged_res-31:/drawable_ic_refresh.xml.flat",
+        "source": "com.faesa.fayseri.app-main-33:/drawable/ic_refresh.xml"
+    },
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\drawable_ic_refresh.xml.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\drawable\\ic_refresh.xml"
+    },
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "com.faesa.fayseri.app-merged_res-31:/layout_activity_main.xml.flat",
+        "source": "com.faesa.fayseri.app-main-33:/layout/activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-merged_res-31:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\ahmad\\.gradle\\daemon\\8.2\\com.faesa.fayseri.app-main-33:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    }
+]

@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"name": "🌶️ Cabe Kami Android",
+			"path": "CabeKamiAndroid"
+		},
+		{
+			"name": "🌿 Fayseri Android",
+			"path": "FayseriAndroid"
+		},
+		{
+			"name": "🌐 Fayseri Web Assets",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.port": 5501,
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"java.import.gradle.enabled": true,
+		"java.import.gradle.wrapper.enabled": true,
+		"java.import.gradle.java.home": "C:\\Program Files\\Android\\Android Studio\\jbr"
+	}
+}

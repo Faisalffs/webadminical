@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="faesa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabe Kami - Toko Resmi Hasil Panen Fayseri</title>
+    <meta name="description" content="Katalog produk cabe segar berkualitas tinggi langsung dari greenhouse pintar Fayseri, Kebon 9 Sungai Gelam Jambi.">
+    <meta name="keywords" content="cabe segar, beli cabe, hasil panen fayseri, kebun cabe jambi, greenhouse">
+    <meta name="author" content="Faesa Technology Agriculture System">
+    <meta property="og:title" content="Cabe Kami - Toko Resmi Hasil Panen Fayseri">
+    <meta property="og:description" content="Produk segar langsung dari greenhouse Fayseri. Dipanen secara presisi dan terjamin kualitasnya.">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+    <!-- ========== TOPBAR COMPACT (40px) & SUB-NAVBAR ========== -->
+    <header id="mainHeader">
+        <div class="navbar">
+
+            <!-- Brand -->
+            <a href="#" class="brand" id="brandHome">
+                <i class="fa-solid fa-pepper-hot"></i>
+                <span>Cabe Kami</span>
+            </a>
+
+            <!-- Nav Right Icons + Search -->
+            <div class="nav-right">
+                <!-- Search (placed on the right) -->
+                <div class="nav-search-wrap">
+                    <div class="nav-search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" id="headerSearch" name="search_q" placeholder="Cari produk..." autocomplete="off" aria-label="Cari produk">
+                        <button class="nav-search-clear" id="headerSearchClear" style="display:none;" aria-label="Hapus pencarian">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="nav-icon-btn" id="btnWishlist" title="Favorit saya" aria-label="Buka favorit">
+                    <i class="fa-regular fa-heart"></i>
+                    <span class="badge-count" id="wishlistCount" style="display:none;">0</span>
+                </button>
+                <button class="nav-icon-btn" id="btnChat" title="Chat dengan penjual" aria-label="Buka chat">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <span class="badge-count" id="chatBadge" style="display:none; background:#f59e0b;">!</span>
+                </button>
+                <!-- APK-only Cool Refresh Button in Top Bar (Kanan Atas) -->
+                <button class="nav-icon-btn apk-only-refresh" id="btnApkRefresh" title="Muat ulang halaman" aria-label="Muat ulang" style="display: none;">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Sub Navbar (32px): Tab Menu & Konfigurasi -->
+        <div class="sub-navbar">
+            <nav class="nav-tabs" role="navigation" aria-label="Menu utama">
+                <a href="#heroSection" class="nav-tab active" id="tabBeranda" data-tab="beranda">Beranda</a>
+                <a href="#catalog"     class="nav-tab"        id="tabKatalog" data-tab="catalog">Katalog</a>
+                <a href="#cara-pesan"  class="nav-tab"        id="tabCaraPesan" data-tab="cara-pesan">Cara Pesan</a>
+                <a href="#"            class="nav-tab"        id="tabPanduan" data-tab="panduan">Panduan Menanam</a>
+                <a href="#"            class="nav-tab"        id="tabSettings" data-tab="settings">
+                    <i class="fa-solid fa-sliders" style="margin-right: 0.35rem; font-size: 0.72rem; opacity: 0.8;"></i>Konfigurasi Sistem
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== HERO SECTION COMPACT & BERSIH ========== -->
+    <section class="hero-compact" id="heroSection">
+        <div class="hero-compact-inner">
+            <div class="hero-content-split">
+                
+                <!-- Left Column: Rich Text & CTAs -->
+                <div class="hero-left-content anim-slide-left">
+                    <span class="hero-badge">
+                        <i class="fa-solid fa-leaf"></i> Langsung dari Greenhouse Fayseri
+                    </span>
+                    <h1>Cabe Segar &amp; Presisi</h1>
+                    <p class="hero-desc-large">Dipanen secara presisi dari greenhouse pintar Kebon 9 Sungai Gelam demi cita rasa pedas optimal, kesegaran maksimal, and kualitas terbaik langsung di tangan Anda. Kami mengintegrasikan teknologi IoT untuk mengontrol suhu, nutrisi, dan pengairan secara real-time, memastikan buah cabai tumbuh dengan ukuran presisi, tingkat kepedasan terstandarisasi, dan bebas residu pestisida.</p>
+                    
+                    <div class="hero-actions">
+                        <a href="#catalog" class="btn-hero-primary" id="btnHeroCatalog">
+                            <i class="fa-solid fa-pepper-hot"></i> Jelajahi Katalog
+                        </a>
+                        <button class="btn-hero-secondary" id="btnHeroChat">
+                            <i class="fa-solid fa-comments"></i> Tanya Penjual
+                        </button>
+                    </div>
+ 
+                    <!-- Statistik Sederhana (Supabase) -->
+                    <div class="hero-stats-row-simple">
+                        <div class="hero-stat-item-simple">
+                            <span class="hero-stat-val-simple" id="statTotal">—</span>
+                            <span class="hero-stat-lbl-simple">Total Produk</span>
+                        </div>
+                        <div class="hero-stat-divider-simple"></div>
+                        <div class="hero-stat-item-simple">
+                            <span class="hero-stat-val-simple" id="statTersedia">—</span>
+                            <span class="hero-stat-lbl-simple">Produk Tersedia</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column: Glassmorphic IoT Showcase (Desktop Only, Hidden on Mobile) -->
+                <div class="hero-right-showcase anim-slide-right">
+                    <div class="iot-glass-card">
+                        <div class="iot-card-header">
+                            <span class="iot-live-dot"></span>
+                            <span>IoT Greenhouse Jambi - Kebon 9</span>
+                        </div>
+                        <div class="iot-metrics">
+                            <div class="iot-metric-item">
+                                <i class="fa-solid fa-temperature-half temp-icon"></i>
+                                <div class="iot-metric-info">
+                                    <span class="iot-val">29.4°C</span>
+                                    <span class="iot-lbl">Suhu Udara</span>
+                                </div>
+                            </div>
+                            <div class="iot-metric-item">
+                                <i class="fa-solid fa-droplet hum-icon"></i>
+                                <div class="iot-metric-info">
+                                    <span class="iot-val">68%</span>
+                                    <span class="iot-lbl">Kelembaban</span>
+                                </div>
+                            </div>
+                            <div class="iot-metric-item">
+                                <i class="fa-solid fa-seedling pH-icon"></i>
+                                <div class="iot-metric-info">
+                                    <span class="iot-val">EC 2.4</span>
+                                    <span class="iot-lbl">Nutrisi AB Mix</span>
+                                </div>
+                            </div>
+                            <div class="iot-metric-item">
+                                <i class="fa-solid fa-circle-check status-icon"></i>
+                                <div class="iot-metric-info">
+                                    <span class="iot-val">Optimal</span>
+                                    <span class="iot-lbl">Status Panen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iot-card-footer">
+                            <i class="fa-solid fa-microchip"></i>
+                            <span>Data tersinkronisasi otomatis dari Fayseri</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STRIP KEUNGGULAN (USP) ORIGINAL ========== -->
+    <section class="usp-section" id="uspSectionHome" aria-label="Keunggulan Cabe Kami">
+        <div class="section-container">
+            <div class="usp-grid">
+                <div class="usp-card anim-slide-left">
+                    <div class="usp-icon-wrap"><i class="fa-solid fa-leaf"></i></div>
+                    <h3>Petik Segar Maksimal</h3>
+                    <p>Cabai dipanen secara selektif saat tingkat kematangan optimal dan langsung dipacking di hari yang sama.</p>
+                </div>
+                <div class="usp-card anim-slide-left">
+                    <div class="usp-icon-wrap"><i class="fa-solid fa-microchip"></i></div>
+                    <h3>Greenhouse IoT</h3>
+                    <p>Sistem fertigasi mikro otomatis mengatur nutrisi dan iklim secara presisi untuk konsistensi buah terbaik.</p>
+                </div>
+                <div class="usp-card anim-slide-right">
+                    <div class="usp-icon-wrap"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Bebas Residu Kimia</h3>
+                    <p>Budidaya modern di lingkungan terkontrol meminimalkan hama tanpa semprotan kimia berbahaya.</p>
+                </div>
+                <div class="usp-card anim-slide-right">
+                    <div class="usp-icon-wrap"><i class="fa-solid fa-handshake"></i></div>
+                    <h3>Harga Direct Petani</h3>
+                    <p>Langsung dari greenhouse Kebon 9 Muaro Jambi ke tangan Anda tanpa perantara tengkulak.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== KATALOG PRODUK ========== -->
+    <main id="catalog">
+
+        <!-- Filter Toolbar -->
+        <div class="catalog-header">
+            <div class="catalog-title-row">
+                <h2 class="section-title">Katalog Produk</h2>
+                <div class="catalog-badges">
+                    <span class="product-count-badge" id="productCount"></span>
+                </div>
+            </div>
+
+            <div class="filter-toolbar">
+                <!-- Search -->
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" id="searchInput" name="catalog_search_q" placeholder="Cari produk..." autocomplete="off" aria-label="Cari produk">
+                    <button class="search-clear" id="searchClear" style="display:none;" aria-label="Hapus pencarian">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Filter Buttons -->
+                <div class="filter-group" role="group" aria-label="Filter status">
+                    <button class="filter-btn active" data-filter="semua">Semua</button>
+                    <button class="filter-btn" data-filter="tersedia">
+                        <i class="fa-solid fa-circle-check"></i> Tersedia
+                    </button>
+                    <button class="filter-btn" data-filter="habis">
+                        <i class="fa-solid fa-circle-xmark"></i> Habis
+                    </button>
+                </div>
+
+                <!-- Sort -->
+                <div class="sort-wrap">
+                    <i class="fa-solid fa-arrow-up-wide-short"></i>
+                    <select id="sortSelect" class="sort-select" aria-label="Urutkan produk">
+                        <option value="default">Default</option>
+                        <option value="harga-asc">Harga: Terendah</option>
+                        <option value="harga-desc">Harga: Tertinggi</option>
+                        <option value="nama-asc">Nama: A–Z</option>
+                        <option value="nama-desc">Nama: Z–A</option>
+                    </select>
+                </div>
+
+                <!-- Refresh -->
+                <button class="btn-refresh" id="btnRefresh" title="Muat ulang" aria-label="Muat ulang data">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Grid Produk -->
+        <div class="products-grid" id="productGrid" role="main" aria-label="Katalog produk">
+            <div class="loading-state" style="grid-column:1/-1;">
+                <div class="loading-spinner"></div>
+                <p>Memuat dari Fayseri Cloud...</p>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-wrap" id="paginationWrap" style="display:none;" aria-label="Navigasi halaman">
+            <button class="page-btn" id="pagePrev" disabled aria-label="Halaman sebelumnya">
+                <i class="fa-solid fa-chevron-left"></i> Sebelumnya
+            </button>
+            <div class="page-numbers" id="pageNumbers" role="list"></div>
+            <button class="page-btn" id="pageNext" aria-label="Halaman berikutnya">
+                Selanjutnya <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- ========== CARA PEMESANAN ========== -->
+    <section class="cara-pesan-section" id="cara-pesan">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Cara Pemesanan</h2>
+                <p class="section-sub">Mudah dan cepat langsung ke petani</p>
+            </div>
+            <div class="steps-row">
+                <div class="step-card anim-slide-left">
+                    <div class="step-num">1</div>
+                    <div class="step-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+                    <h4>Pilih Produk</h4>
+                    <p>Telusuri katalog dan pilih produk yang diinginkan</p>
+                </div>
+                <div class="step-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                <div class="step-card anim-slide-left">
+                    <div class="step-num">2</div>
+                    <div class="step-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <h4>Hubungi Admin</h4>
+                    <p>Klik "Pesan" — pesan WA terisi otomatis</p>
+                </div>
+                <div class="step-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                <div class="step-card anim-slide-right">
+                    <div class="step-num">3</div>
+                    <div class="step-icon"><i class="fa-solid fa-handshake"></i></div>
+                    <h4>Konfirmasi</h4>
+                    <p>Diskusikan jumlah dan metode pembayaran</p>
+                </div>
+                <div class="step-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                <div class="step-card anim-slide-right">
+                    <div class="step-num">4</div>
+                    <div class="step-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <h4>Terima Produk</h4>
+                    <p>Produk segar diantarkan atau ambil di kebun</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PANDUAN MENANAM (SPA SECTION) ========== -->
+    <section class="panduan-section" id="panduanSection" style="display: none; padding: 4rem 1.5rem; background: var(--bg-body);">
+        <div class="section-container">
+            <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+                <h2 class="section-title">Buku Panduan Menanam</h2>
+                <p class="section-sub" style="color: var(--text-sub); margin-top: 0.5rem;">Tips &amp; cara budidaya cabai modern</p>
+            </div>
+
+            <!-- Search and Filter for Panduan -->
+            <div class="filter-toolbar" style="margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; background: var(--bg-card); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                <div class="search-box" style="flex: 1; min-width: 250px;">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" id="searchPanduanInput" placeholder="Cari panduan..." autocomplete="off" aria-label="Cari panduan">
+                </div>
+                <div class="sort-wrap" style="width: auto; min-width: 200px; position: relative;">
+                    <i class="fa-solid fa-filter" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-sub); pointer-events: none;"></i>
+                    <select id="filterPanduanKategori" class="sort-select" style="width: 100%; border: 1px solid var(--border-color); background-color: var(--bg-card); padding: 0.5rem 2rem 0.5rem 2.5rem; border-radius: 8px; font-weight: 500; color: var(--text-main); cursor: pointer;" aria-label="Filter kategori panduan">
+                        <option value="all">Semua Kategori</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Panduan Grid -->
+            <div class="panduan-grid" id="panduanGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                <!-- Dynamically populated -->
+            </div>
+
+            <div id="panduanEmptyState" style="display: none; text-align: center; padding: 3rem; color: var(--text-sub);">
+                <i class="fa-solid fa-book-bookmark" style="font-size: 3rem; color: var(--primary-alpha); margin-bottom: 1rem;"></i>
+                <p style="font-weight: 600; font-size: 1.1rem; color: var(--text-main);">Tidak ada panduan ditemukan</p>
+                <span>Coba kata kunci atau kategori filter yang berbeda.</span>
+            </div>
+
+            <!-- ========== STRIP KEUNGGULAN (USP) PANDUAN ========== -->
+            <div style="margin-top: 5rem; border-top: 1.5px solid var(--border-color); padding-top: 4rem;">
+                <div class="usp-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+                    <div class="usp-card anim-slide-left" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: var(--shadow-sm); transition: transform 0.3s ease;">
+                        <div class="usp-icon-wrap" style="width: 50px; height: 50px; background: var(--primary-alpha); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 1.25rem;"><i class="fa-solid fa-leaf"></i></div>
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Petik Segar Maksimal</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.5;">Cabai dipanen secara selektif saat tingkat kematangan optimal dan langsung dipacking di hari yang sama.</p>
+                    </div>
+                    <div class="usp-card anim-slide-left" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: var(--shadow-sm); transition: transform 0.3s ease;">
+                        <div class="usp-icon-wrap" style="width: 50px; height: 50px; background: var(--primary-alpha); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 1.25rem;"><i class="fa-solid fa-microchip"></i></div>
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Greenhouse IoT</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.5;">Sistem fertigasi mikro otomatis mengatur nutrisi and iklim secara presisi untuk konsistensi buah terbaik.</p>
+                    </div>
+                    <div class="usp-card anim-slide-right" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: var(--shadow-sm); transition: transform 0.3s ease;">
+                        <div class="usp-icon-wrap" style="width: 50px; height: 50px; background: var(--primary-alpha); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 1.25rem;"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Bebas Residu Kimia</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.5;">Budidaya modern di lingkungan terkontrol meminimalkan hama tanpa semprotan kimia berbahaya.</p>
+                    </div>
+                    <div class="usp-card anim-slide-right" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: var(--shadow-sm); transition: transform 0.3s ease;">
+                        <div class="usp-icon-wrap" style="width: 50px; height: 50px; background: var(--primary-alpha); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 1.25rem;"><i class="fa-solid fa-handshake"></i></div>
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Harga Direct Petani</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.5;">Langsung dari greenhouse Kebon 9 Muaro Jambi ke tangan Anda tanpa perantara tengkulak.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== LOGIN SECTION (SPA SECTION) ========== -->
+    <section class="auth-section" id="loginSection" style="display: none; padding: 4rem 1.5rem 6rem 1.5rem; background: var(--bg-body); min-height: 70vh; align-items: flex-start; justify-content: center;">
+        <div class="section-container" style="max-width: 480px; width: 100%; margin: 0 auto;">
+
+            <!-- Auth Mascot Character -->
+            <div class="auth-mascot-wrap" id="loginMascotWrap">
+                <svg class="auth-mascot" id="loginMascot" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="loginGreenChiliGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#81C784"/>
+                            <stop offset="100%" stop-color="#2E7D32"/>
+                        </linearGradient>
+                        <linearGradient id="loginPersonFaceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#FFE0B2"/>
+                            <stop offset="100%" stop-color="#FFB74D"/>
+                        </linearGradient>
+                        <linearGradient id="loginYellowChiliGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#FFF176"/>
+                            <stop offset="100%" stop-color="#F57F17"/>
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Ground Shadows -->
+                    <ellipse cx="65" cy="130" rx="22" ry="4.5" fill="#000" opacity="0.12"/>
+                    <ellipse cx="150" cy="134" rx="28" ry="5" fill="#000" opacity="0.12"/>
+                    <ellipse cx="235" cy="130" rx="24" ry="4.5" fill="#000" opacity="0.12"/>
+
+                    <!-- ===== CHARACTER 1: Green Chili (Left) ===== -->
+                    <g id="loginChiliGreen">
+                        <!-- Body -->
+                        <path d="M 50 55 C 48 88, 60 128, 65 128 C 70 128, 82 88, 80 55 C 80 40, 50 40, 50 55 Z" fill="url(#loginGreenChiliGrad)"/>
+                        <!-- Stem -->
+                        <path d="M 54 47 Q 65 34 76 47 Q 65 43 54 47 Z" fill="#1B5E20"/>
+                        <path d="M 65 39 Q 60 26 53 26" stroke="#1B5E20" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+                        <!-- LEFT ARM (always visible, swaying) -->
+                        <g class="mascot-arm-l" style="transform-origin: 50px 80px;">
+                            <path d="M 50 78 Q 38 82 34 92 Q 32 96 36 97" stroke="#4CAF50" stroke-width="5" fill="none" stroke-linecap="round"/>
+                            <!-- Hand (rounded fist) -->
+                            <circle cx="36" cy="97" r="4.5" fill="#66BB6A"/>
+                            <circle cx="33" cy="95" r="1.5" fill="#388E3C"/>
+                            <circle cx="34" cy="99" r="1.5" fill="#388E3C"/>
+                            <circle cx="38" cy="100" r="1.5" fill="#388E3C"/>
+                        </g>
+                        <!-- RIGHT ARM -->
+                        <g class="mascot-arm-r" style="transform-origin: 80px 80px;">
+                            <path d="M 80 78 Q 92 82 96 92 Q 98 96 94 97" stroke="#4CAF50" stroke-width="5" fill="none" stroke-linecap="round"/>
+                            <circle cx="94" cy="97" r="4.5" fill="#66BB6A"/>
+                            <circle cx="97" cy="95" r="1.5" fill="#388E3C"/>
+                            <circle cx="96" cy="99" r="1.5" fill="#388E3C"/>
+                            <circle cx="92" cy="100" r="1.5" fill="#388E3C"/>
+                        </g>
+
+                        <!-- Eyebrows -->
+                        <path class="mascot-eyebrow-l" d="M 53 57 Q 58 54 63 57" stroke="#1B5E20" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <path class="mascot-eyebrow-r" d="M 67 57 Q 72 54 77 57" stroke="#1B5E20" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <!-- Eyes -->
+                        <g class="mascot-eye-l" style="transform-origin: 58px 66px;">
+                            <circle cx="58" cy="66" r="7" fill="white"/>
+                            <circle class="mascot-pupil" cx="58" cy="66" r="3.5" fill="#1B5E20"/>
+                            <circle cx="59.5" cy="64.5" r="1.2" fill="white" opacity="0.9"/>
+                        </g>
+                        <g class="mascot-eye-r" style="transform-origin: 72px 66px;">
+                            <circle cx="72" cy="66" r="7" fill="white"/>
+                            <circle class="mascot-pupil" cx="72" cy="66" r="3.5" fill="#1B5E20"/>
+                            <circle cx="73.5" cy="64.5" r="1.2" fill="white" opacity="0.9"/>
+                        </g>
+                        <!-- Blush -->
+                        <ellipse cx="52" cy="74" rx="4" ry="1.8" fill="#FF8A65" opacity="0.5"/>
+                        <ellipse cx="78" cy="74" rx="4" ry="1.8" fill="#FF8A65" opacity="0.5"/>
+                        <!-- Mouth -->
+                        <path d="M 61 75 Q 65 79 69 75" stroke="#1B5E20" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <!-- Cover-eyes hands (hidden by default, shown on password) -->
+                        <g class="mascot-hands">
+                            <ellipse cx="58" cy="66" rx="9" ry="7" fill="#4CAF50" opacity="0.95"/>
+                            <ellipse cx="72" cy="66" rx="9" ry="7" fill="#4CAF50" opacity="0.95"/>
+                            <circle cx="51" cy="64" r="2" fill="#388E3C"/><circle cx="54" cy="61" r="2" fill="#388E3C"/>
+                            <circle cx="79" cy="64" r="2" fill="#388E3C"/><circle cx="76" cy="61" r="2" fill="#388E3C"/>
+                        </g>
+                    </g>
+
+                    <!-- ===== CHARACTER 2: Greenhouse Farmer (Center) ===== -->
+                    <g id="loginChiliRed">
+                        <!-- Body / Clothes -->
+                        <path d="M 124 98 C 124 118, 132 134, 150 134 C 168 134, 176 118, 176 98 Z" fill="#00897B"/>
+                        <path d="M 142 98 L 150 106 L 158 98 Z" fill="#FFE0B2"/>
+                        
+                        <!-- LEFT ARM -->
+                        <g class="mascot-arm-l" style="transform-origin: 124px 100px;">
+                            <path d="M 124 100 Q 108 106 104 118 Q 102 122 106 124" stroke="#00897B" stroke-width="6" fill="none" stroke-linecap="round"/>
+                            <circle cx="106" cy="124" r="5" fill="#FFE0B2" stroke="#FFB74D" stroke-width="1"/>
+                            <circle cx="102" cy="122" r="1.8" fill="#FFA726"/>
+                            <circle cx="103" cy="126" r="1.8" fill="#FFA726"/>
+                            <circle cx="108" cy="127" r="1.8" fill="#FFA726"/>
+                        </g>
+                        <!-- RIGHT ARM -->
+                        <g class="mascot-arm-r" style="transform-origin: 176px 100px;">
+                            <path d="M 176 100 Q 192 106 196 118 Q 198 122 194 124" stroke="#00897B" stroke-width="6" fill="none" stroke-linecap="round"/>
+                            <circle cx="194" cy="124" r="5" fill="#FFE0B2" stroke="#FFB74D" stroke-width="1"/>
+                            <circle cx="198" cy="122" r="1.8" fill="#FFA726"/>
+                            <circle cx="197" cy="126" r="1.8" fill="#FFA726"/>
+                            <circle cx="192" cy="127" r="1.8" fill="#FFA726"/>
+                        </g>
+
+                        <!-- Head -->
+                        <circle cx="150" cy="74" r="26" fill="url(#loginPersonFaceGrad)"/>
+                        <!-- Hair -->
+                        <path d="M 124 72 C 124 52, 176 52, 176 72 C 170 58, 130 58, 124 72 Z" fill="#3E2723"/>
+                        <!-- Straw Hat -->
+                        <path d="M 128 52 C 128 26, 172 26, 172 52 Z" fill="#D7CCC8" stroke="#8D6E63" stroke-width="1.5"/>
+                        <ellipse cx="150" cy="52" rx="36" ry="6" fill="#D7CCC8" stroke="#8D6E63" stroke-width="1.5"/>
+                        <path d="M 132 50 Q 150 46 168 50" stroke="#E53935" stroke-width="2.5" fill="none"/>
+                        <!-- Eyebrows -->
+                        <path class="mascot-eyebrow-l" d="M 134 68 Q 140 65 146 68" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <path class="mascot-eyebrow-r" d="M 154 68 Q 160 65 166 68" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <!-- Eyes -->
+                        <g class="mascot-eye-l" style="transform-origin: 140px 77px;">
+                            <circle cx="140" cy="77" r="7.5" fill="white"/>
+                            <circle class="mascot-pupil" cx="140" cy="77" r="3.8" fill="#3E2723"/>
+                            <circle cx="141.5" cy="75.5" r="1.3" fill="white" opacity="0.9"/>
+                        </g>
+                        <g class="mascot-eye-r" style="transform-origin: 160px 77px;">
+                            <circle cx="160" cy="77" r="7.5" fill="white"/>
+                            <circle class="mascot-pupil" cx="160" cy="77" r="3.8" fill="#3E2723"/>
+                            <circle cx="161.5" cy="75.5" r="1.3" fill="white" opacity="0.9"/>
+                        </g>
+                        <!-- Blush -->
+                        <ellipse cx="132" cy="84" rx="4.5" ry="2" fill="#FF5252" opacity="0.4"/>
+                        <ellipse cx="168" cy="84" rx="4.5" ry="2" fill="#FF5252" opacity="0.4"/>
+                        <!-- Mouth -->
+                        <path d="M 144 88 Q 150 93 156 88" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <!-- Cover-eyes hands -->
+                        <g class="mascot-hands">
+                            <ellipse cx="140" cy="77" rx="9" ry="7" fill="#FFE0B2" stroke="#FFB74D" stroke-width="1" opacity="0.95"/>
+                            <ellipse cx="160" cy="77" rx="9" ry="7" fill="#FFE0B2" stroke="#FFB74D" stroke-width="1" opacity="0.95"/>
+                            <circle cx="133" cy="75" r="2" fill="#FFA726"/><circle cx="136" cy="72" r="2" fill="#FFA726"/>
+                            <circle cx="167" cy="75" r="2" fill="#FFA726"/><circle cx="164" cy="72" r="2" fill="#FFA726"/>
+                        </g>
+                    </g>
+
+                    <!-- ===== CHARACTER 3: Chibi (Right - Hoodie Kid) ===== -->
+                    <g id="loginChiliYellow">
+                        <!-- Body (Hoodie) -->
+                        <path d="M 213 100 C 213 116, 220 128, 235 128 C 250 128, 257 116, 257 100 Z" fill="#0288D1"/>
+                        <path d="M 229 100 L 229 114" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M 241 100 L 241 114" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        
+                        <!-- LEFT ARM -->
+                        <g class="mascot-arm-l" style="transform-origin: 213px 104px;">
+                            <path d="M 213 104 Q 199 108 196 118 Q 194 122 198 124" stroke="#0288D1" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+                            <circle cx="198" cy="124" r="4.5" fill="#FFF176" stroke="#F9A825" stroke-width="0.8"/>
+                            <circle cx="195" cy="122" r="1.5" fill="#F57F17"/>
+                            <circle cx="196" cy="126" r="1.5" fill="#F57F17"/>
+                            <circle cx="200" cy="127" r="1.5" fill="#F57F17"/>
+                        </g>
+                        <!-- RIGHT ARM -->
+                        <g class="mascot-arm-r" style="transform-origin: 257px 104px;">
+                            <path d="M 257 104 Q 271 108 274 118 Q 276 122 272 124" stroke="#0288D1" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+                            <circle cx="272" cy="124" r="4.5" fill="#FFF176" stroke="#F9A825" stroke-width="0.8"/>
+                            <circle cx="275" cy="122" r="1.5" fill="#F57F17"/>
+                            <circle cx="274" cy="126" r="1.5" fill="#F57F17"/>
+                            <circle cx="270" cy="127" r="1.5" fill="#F57F17"/>
+                        </g>
+
+                        <!-- Head -->
+                        <circle cx="235" cy="76" r="24" fill="url(#loginYellowChiliGrad)"/>
+                        <!-- Cap -->
+                        <path d="M 216 64 C 216 44, 254 44, 254 64 Z" fill="#0288D1"/>
+                        <path d="M 249 62 Q 264 58 268 66 C 264 66, 252 66, 249 62" fill="#01579B"/>
+                        <!-- Eyebrows -->
+                        <path class="mascot-eyebrow-l" d="M 221 70 Q 226 67 231 70" stroke="#E65100" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <path class="mascot-eyebrow-r" d="M 239 70 Q 244 67 249 70" stroke="#E65100" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <!-- Eyes -->
+                        <g class="mascot-eye-l" style="transform-origin: 226px 78px;">
+                            <circle cx="226" cy="78" r="6.5" fill="white"/>
+                            <circle class="mascot-pupil" cx="226" cy="78" r="3.2" fill="#E65100"/>
+                            <circle cx="227.2" cy="76.5" r="1.1" fill="white" opacity="0.9"/>
+                        </g>
+                        <g class="mascot-eye-r" style="transform-origin: 244px 78px;">
+                            <circle cx="244" cy="78" r="6.5" fill="white"/>
+                            <circle class="mascot-pupil" cx="244" cy="78" r="3.2" fill="#E65100"/>
+                            <circle cx="245.2" cy="76.5" r="1.1" fill="white" opacity="0.9"/>
+                        </g>
+                        <!-- Blush -->
+                        <ellipse cx="219" cy="84" rx="3.5" ry="1.5" fill="#FF8A65" opacity="0.5"/>
+                        <ellipse cx="251" cy="84" rx="3.5" ry="1.5" fill="#FF8A65" opacity="0.5"/>
+                        <!-- Mouth -->
+                        <path d="M 231 87 Q 235 92 239 87 Z" fill="#E65100"/>
+                        <!-- Cover-eyes hands -->
+                        <g class="mascot-hands">
+                            <ellipse cx="226" cy="78" rx="8" ry="6.5" fill="#FFF176" stroke="#F9A825" stroke-width="0.8" opacity="0.95"/>
+                            <ellipse cx="244" cy="78" rx="8" ry="6.5" fill="#FFF176" stroke="#F9A825" stroke-width="0.8" opacity="0.95"/>
+                            <circle cx="219" cy="76" r="1.8" fill="#F57F17"/><circle cx="222" cy="73" r="1.8" fill="#F57F17"/>
+                            <circle cx="251" cy="76" r="1.8" fill="#F57F17"/><circle cx="248" cy="73" r="1.8" fill="#F57F17"/>
+                        </g>
+                    </g>
+                </svg>
+                <p class="auth-mascot-hint" id="loginMascotHint">Hei! Kami menjaga akunmu 👋</p>
+            </div>
+
+            <div class="auth-card">
+                <div class="auth-card-bar"></div>
+                
+                <div style="padding: 2.5rem 2rem 2.5rem 2rem; text-align: center;">
+                    <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem; font-family: 'Poppins', sans-serif;">Masuk ke Akun</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 1.75rem; line-height: 1.5;">Masuk untuk menikmati fitur interaktif dan chat dengan admin.</p>
+                    
+                    <form class="auth-form" id="authLoginForm" onsubmit="return false;" autocomplete="on" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                        <div style="display: flex; flex-direction: column; gap: 0.45rem; text-align: left;">
+                            <label for="authEmail" style="font-size: 0.82rem; font-weight: 600; color: var(--text-main);">Alamat Email</label>
+                            <div style="position: relative;">
+                                <i class="fa-regular fa-envelope" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;"></i>
+                                <input type="email" id="authEmail" class="settings-input auth-input" placeholder="Masukkan email Anda" autocomplete="username" style="width: 100%; padding: 12px 12px 12px 2.5rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); font-size: 0.9rem; outline: none; transition: border-color 0.2s;" required>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 0.45rem; text-align: left;">
+                            <label for="authPassword" style="font-size: 0.82rem; font-weight: 600; color: var(--text-main);">Kata Sandi</label>
+                            <div style="position: relative;">
+                                <i class="fa-solid fa-lock" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;"></i>
+                                <input type="password" id="authPassword" class="settings-input auth-input auth-password-input" placeholder="Masukkan password Anda" autocomplete="current-password" style="width: 100%; padding: 12px 12px 12px 2.5rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); font-size: 0.9rem; outline: none; transition: border-color 0.2s;" required>
+                            </div>
+                        </div>
+                        
+                        <p class="auth-error-msg" id="authErrorMsg" style="display:none; color: var(--danger); font-size: 0.8rem; margin: 0; text-align: left; padding: 0.5rem 0.75rem; background: var(--danger-light); border-radius: 8px; font-weight: 500;"></p>
+                        
+                        <button type="submit" class="btn-auth-login" id="btnAuthLogin" style="width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 10px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.95rem; box-shadow: var(--primary-shadow);">
+                            <i class="fa-solid fa-right-to-bracket"></i> Masuk
+                        </button>
+                    </form>
+                    
+                    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-sub);">
+                        Belum punya akun? <a href="#" id="linkToRegister" style="color: var(--primary); font-weight: 600; text-decoration: none; transition: color 0.2s;">Daftar di Sini</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== REGISTER SECTION (SPA SECTION) ========== -->
+    <section class="auth-section" id="registerSection" style="display: none; padding: 4rem 1.5rem 6rem 1.5rem; background: var(--bg-body); min-height: 70vh; align-items: flex-start; justify-content: center;">
+        <div class="section-container" style="max-width: 480px; width: 100%; margin: 0 auto;">
+
+            <!-- Auth Mascot Character -->
+            <div class="auth-mascot-wrap" id="regMascotWrap">
+                <svg class="auth-mascot" id="regMascot" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="regGreenChiliGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#81C784"/>
+                            <stop offset="100%" stop-color="#2E7D32"/>
+                        </linearGradient>
+                        <linearGradient id="regPersonFaceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#FFE0B2"/>
+                            <stop offset="100%" stop-color="#FFB74D"/>
+                        </linearGradient>
+                        <linearGradient id="regYellowChiliGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#FFF176"/>
+                            <stop offset="100%" stop-color="#F57F17"/>
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Ground Shadows -->
+                    <ellipse cx="65" cy="130" rx="22" ry="4.5" fill="#000" opacity="0.12"/>
+                    <ellipse cx="150" cy="134" rx="28" ry="5" fill="#000" opacity="0.12"/>
+                    <ellipse cx="235" cy="130" rx="24" ry="4.5" fill="#000" opacity="0.12"/>
+
+                    <!-- ===== CHARACTER 1: Green Chili (Left) ===== -->
+                    <g id="regChiliGreen">
+                        <path d="M 50 55 C 48 88, 60 128, 65 128 C 70 128, 82 88, 80 55 C 80 40, 50 40, 50 55 Z" fill="url(#regGreenChiliGrad)"/>
+                        <path d="M 54 47 Q 65 34 76 47 Q 65 43 54 47 Z" fill="#1B5E20"/>
+                        <path d="M 65 39 Q 60 26 53 26" stroke="#1B5E20" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <g class="mascot-arm-l" style="transform-origin: 50px 80px;">
+                            <path d="M 50 78 Q 38 82 34 92 Q 32 96 36 97" stroke="#4CAF50" stroke-width="5" fill="none" stroke-linecap="round"/>
+                            <circle cx="36" cy="97" r="4.5" fill="#66BB6A"/>
+                            <circle cx="33" cy="95" r="1.5" fill="#388E3C"/>
+                            <circle cx="34" cy="99" r="1.5" fill="#388E3C"/>
+                            <circle cx="38" cy="100" r="1.5" fill="#388E3C"/>
+                        </g>
+                        <g class="mascot-arm-r" style="transform-origin: 80px 80px;">
+                            <path d="M 80 78 Q 92 82 96 92 Q 98 96 94 97" stroke="#4CAF50" stroke-width="5" fill="none" stroke-linecap="round"/>
+                            <circle cx="94" cy="97" r="4.5" fill="#66BB6A"/>
+                            <circle cx="97" cy="95" r="1.5" fill="#388E3C"/>
+                            <circle cx="96" cy="99" r="1.5" fill="#388E3C"/>
+                            <circle cx="92" cy="100" r="1.5" fill="#388E3C"/>
+                        </g>
+                        <path class="mascot-eyebrow-l" d="M 53 57 Q 58 54 63 57" stroke="#1B5E20" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <path class="mascot-eyebrow-r" d="M 67 57 Q 72 54 77 57" stroke="#1B5E20" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <g class="mascot-eye-l" style="transform-origin: 58px 66px;">
+                            <circle cx="58" cy="66" r="7" fill="white"/>
+                            <circle class="mascot-pupil" cx="58" cy="66" r="3.5" fill="#1B5E20"/>
+                            <circle cx="59.5" cy="64.5" r="1.2" fill="white" opacity="0.9"/>
+                        </g>
+                        <g class="mascot-eye-r" style="transform-origin: 72px 66px;">
+                            <circle cx="72" cy="66" r="7" fill="white"/>
+                            <circle class="mascot-pupil" cx="72" cy="66" r="3.5" fill="#1B5E20"/>
+                            <circle cx="73.5" cy="64.5" r="1.2" fill="white" opacity="0.9"/>
+                        </g>
+                        <ellipse cx="52" cy="74" rx="4" ry="1.8" fill="#FF8A65" opacity="0.5"/>
+                        <ellipse cx="78" cy="74" rx="4" ry="1.8" fill="#FF8A65" opacity="0.5"/>
+                        <path d="M 61 75 Q 65 79 69 75" stroke="#1B5E20" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <g class="mascot-hands">
+                            <ellipse cx="58" cy="66" rx="9" ry="7" fill="#4CAF50" opacity="0.95"/>
+                            <ellipse cx="72" cy="66" rx="9" ry="7" fill="#4CAF50" opacity="0.95"/>
+                            <circle cx="51" cy="64" r="2" fill="#388E3C"/><circle cx="54" cy="61" r="2" fill="#388E3C"/>
+                            <circle cx="79" cy="64" r="2" fill="#388E3C"/><circle cx="76" cy="61" r="2" fill="#388E3C"/>
+                        </g>
+                    </g>
+
+                    <!-- ===== CHARACTER 2: Greenhouse Farmer (Center) ===== -->
+                    <g id="regChiliRed">
+                        <path d="M 124 98 C 124 118, 132 134, 150 134 C 168 134, 176 118, 176 98 Z" fill="#00897B"/>
+                        <path d="M 142 98 L 150 106 L 158 98 Z" fill="#FFE0B2"/>
+                        <g class="mascot-arm-l" style="transform-origin: 124px 100px;">
+                            <path d="M 124 100 Q 108 106 104 118 Q 102 122 106 124" stroke="#00897B" stroke-width="6" fill="none" stroke-linecap="round"/>
+                            <circle cx="106" cy="124" r="5" fill="#FFE0B2" stroke="#FFB74D" stroke-width="1"/>
+                            <circle cx="102" cy="122" r="1.8" fill="#FFA726"/>
+                            <circle cx="103" cy="126" r="1.8" fill="#FFA726"/>
+                            <circle cx="108" cy="127" r="1.8" fill="#FFA726"/>
+                        </g>
+                        <g class="mascot-arm-r" style="transform-origin: 176px 100px;">
+                            <path d="M 176 100 Q 192 106 196 118 Q 198 122 194 124" stroke="#00897B" stroke-width="6" fill="none" stroke-linecap="round"/>
+                            <circle cx="194" cy="124" r="5" fill="#FFE0B2" stroke="#FFB74D" stroke-width="1"/>
+                            <circle cx="198" cy="122" r="1.8" fill="#FFA726"/>
+                            <circle cx="197" cy="126" r="1.8" fill="#FFA726"/>
+                            <circle cx="192" cy="127" r="1.8" fill="#FFA726"/>
+                        </g>
+                        <circle cx="150" cy="74" r="26" fill="url(#regPersonFaceGrad)"/>
+                        <path d="M 124 72 C 124 52, 176 52, 176 72 C 170 58, 130 58, 124 72 Z" fill="#3E2723"/>
+                        <path d="M 128 52 C 128 26, 172 26, 172 52 Z" fill="#D7CCC8" stroke="#8D6E63" stroke-width="1.5"/>
+                        <ellipse cx="150" cy="52" rx="36" ry="6" fill="#D7CCC8" stroke="#8D6E63" stroke-width="1.5"/>
+                        <path d="M 132 50 Q 150 46 168 50" stroke="#E53935" stroke-width="2.5" fill="none"/>
+                        <path class="mascot-eyebrow-l" d="M 134 68 Q 140 65 146 68" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <path class="mascot-eyebrow-r" d="M 154 68 Q 160 65 166 68" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <g class="mascot-eye-l" style="transform-origin: 140px 77px;">
+                            <circle cx="140" cy="77" r="7.5" fill="white"/>
+                            <circle class="mascot-pupil" cx="140" cy="77" r="3.8" fill="#3E2723"/>
+                            <circle cx="141.5" cy="75.5" r="1.3" fill="white" opacity="0.9"/>
+                        </g>
+                        <g class="mascot-eye-r" style="transform-origin: 160px 77px;">
+                            <circle cx="160" cy="77" r="7.5" fill="white"/>
+                            <circle class="mascot-pupil" cx="160" cy="77" r="3.8" fill="#3E2723"/>
+                            <circle cx="161.5" cy="75.5" r="1.3" fill="white" opacity="0.9"/>
+                        </g>
+                        <ellipse cx="132" cy="84" rx="4.5" ry="2" fill="#FF5252" opacity="0.4"/>
+                        <ellipse cx="168" cy="84" rx="4.5" ry="2" fill="#FF5252" opacity="0.4"/>
+                        <path d="M 144 88 Q 150 93 156 88" stroke="#3E2723" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <g class="mascot-hands">
+                            <ellipse cx="140" cy="77" rx="9" ry="7" fill="#FFE0B2" stroke="#FFB74D" stroke-width="1" opacity="0.95"/>
+                            <ellipse cx="160" cy="77" rx="9" ry="7" fill="#FFE0B2" stroke="#FFB74D" stroke-width="1" opacity="0.95"/>
+                            <circle cx="133" cy="75" r="2" fill="#FFA726"/><circle cx="136" cy="72" r="2" fill="#FFA726"/>
+                            <circle cx="167" cy="75" r="2" fill="#FFA726"/><circle cx="164" cy="72" r="2" fill="#FFA726"/>
+                        </g>
+                    </g>
+
+                    <!-- ===== CHARACTER 3: Chibi (Right - Hoodie Kid) ===== -->
+                    <g id="regChiliYellow">
+                        <path d="M 213 100 C 213 116, 220 128, 235 128 C 250 128, 257 116, 257 100 Z" fill="#0288D1"/>
+                        <path d="M 229 100 L 229 114" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M 241 100 L 241 114" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <g class="mascot-arm-l" style="transform-origin: 213px 104px;">
+                            <path d="M 213 104 Q 199 108 196 118 Q 194 122 198 124" stroke="#0288D1" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+                            <circle cx="198" cy="124" r="4.5" fill="#FFF176" stroke="#F9A825" stroke-width="0.8"/>
+                            <circle cx="195" cy="122" r="1.5" fill="#F57F17"/>
+                            <circle cx="196" cy="126" r="1.5" fill="#F57F17"/>
+                            <circle cx="200" cy="127" r="1.5" fill="#F57F17"/>
+                        </g>
+                        <g class="mascot-arm-r" style="transform-origin: 257px 104px;">
+                            <path d="M 257 104 Q 271 108 274 118 Q 276 122 272 124" stroke="#0288D1" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+                            <circle cx="272" cy="124" r="4.5" fill="#FFF176" stroke="#F9A825" stroke-width="0.8"/>
+                            <circle cx="275" cy="122" r="1.5" fill="#F57F17"/>
+                            <circle cx="274" cy="126" r="1.5" fill="#F57F17"/>
+                            <circle cx="270" cy="127" r="1.5" fill="#F57F17"/>
+                        </g>
+                        <circle cx="235" cy="76" r="24" fill="url(#regYellowChiliGrad)"/>
+                        <path d="M 216 64 C 216 44, 254 44, 254 64 Z" fill="#0288D1"/>
+                        <path d="M 249 62 Q 264 58 268 66 C 264 66, 252 66, 249 62" fill="#01579B"/>
+                        <path class="mascot-eyebrow-l" d="M 221 70 Q 226 67 231 70" stroke="#E65100" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <path class="mascot-eyebrow-r" d="M 239 70 Q 244 67 249 70" stroke="#E65100" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <g class="mascot-eye-l" style="transform-origin: 226px 78px;">
+                            <circle cx="226" cy="78" r="6.5" fill="white"/>
+                            <circle class="mascot-pupil" cx="226" cy="78" r="3.2" fill="#E65100"/>
+                            <circle cx="227.2" cy="76.5" r="1.1" fill="white" opacity="0.9"/>
+                        </g>
+                        <g class="mascot-eye-r" style="transform-origin: 244px 78px;">
+                            <circle cx="244" cy="78" r="6.5" fill="white"/>
+                            <circle class="mascot-pupil" cx="244" cy="78" r="3.2" fill="#E65100"/>
+                            <circle cx="245.2" cy="76.5" r="1.1" fill="white" opacity="0.9"/>
+                        </g>
+                        <ellipse cx="219" cy="84" rx="3.5" ry="1.5" fill="#FF8A65" opacity="0.5"/>
+                        <ellipse cx="251" cy="84" rx="3.5" ry="1.5" fill="#FF8A65" opacity="0.5"/>
+                        <path d="M 231 87 Q 235 92 239 87 Z" fill="#E65100"/>
+                        <g class="mascot-hands">
+                            <ellipse cx="226" cy="78" rx="8" ry="6.5" fill="#FFF176" stroke="#F9A825" stroke-width="0.8" opacity="0.95"/>
+                            <ellipse cx="244" cy="78" rx="8" ry="6.5" fill="#FFF176" stroke="#F9A825" stroke-width="0.8" opacity="0.95"/>
+                            <circle cx="219" cy="76" r="1.8" fill="#F57F17"/><circle cx="222" cy="73" r="1.8" fill="#F57F17"/>
+                            <circle cx="251" cy="76" r="1.8" fill="#F57F17"/><circle cx="248" cy="73" r="1.8" fill="#F57F17"/>
+                        </g>
+                    </g>
+                </svg>
+                <p class="auth-mascot-hint" id="regMascotHint">Ayo buat akun baru bersama kami! 🎉</p>
+            </div>
+
+            <div class="auth-card">
+                <div class="auth-card-bar"></div>
+                
+                <div style="padding: 2.5rem 2rem 2.5rem 2rem; text-align: center;">
+                    <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem; font-family: 'Poppins', sans-serif;">Daftar Akun Baru</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 1.75rem; line-height: 1.5;">Buat akun baru untuk berkirim pesan dengan admin secara langsung.</p>
+                    
+                    <form class="auth-form" id="authRegisterForm" onsubmit="return false;" autocomplete="on" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                        <div style="display: flex; flex-direction: column; gap: 0.45rem; text-align: left;">
+                            <label for="authRegNickname" style="font-size: 0.82rem; font-weight: 600; color: var(--text-main);">Nama Panggilan <span style="color: var(--danger);">*</span></label>
+                            <div style="position: relative;">
+                                <i class="fa-regular fa-user" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;"></i>
+                                <input type="text" id="authRegNickname" class="settings-input auth-input" placeholder="Masukkan nama panggilan Anda" autocomplete="name" style="width: 100%; padding: 12px 12px 12px 2.5rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); font-size: 0.9rem; outline: none; transition: border-color 0.2s;" required>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 0.45rem; text-align: left;">
+                            <label for="authRegEmail" style="font-size: 0.82rem; font-weight: 600; color: var(--text-main);">Alamat Email <span style="color: var(--danger);">*</span></label>
+                            <div style="position: relative;">
+                                <i class="fa-regular fa-envelope" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;"></i>
+                                <input type="email" id="authRegEmail" class="settings-input auth-input" placeholder="Masukkan email baru Anda" autocomplete="username" style="width: 100%; padding: 12px 12px 12px 2.5rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); font-size: 0.9rem; outline: none; transition: border-color 0.2s;" required>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 0.45rem; text-align: left;">
+                            <label for="authRegPassword" style="font-size: 0.82rem; font-weight: 600; color: var(--text-main);">Kata Sandi <span style="color: var(--danger);">*</span></label>
+                            <div style="position: relative;">
+                                <i class="fa-solid fa-lock" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem;"></i>
+                                <input type="password" id="authRegPassword" class="settings-input auth-input auth-password-input" placeholder="Password (min. 6 karakter)" autocomplete="new-password" style="width: 100%; padding: 12px 12px 12px 2.5rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); font-size: 0.9rem; outline: none; transition: border-color 0.2s;" required>
+                            </div>
+                        </div>
+                        
+                        <p class="auth-error-msg" id="authRegErrorMsg" style="display:none; color: var(--danger); font-size: 0.8rem; margin: 0; text-align: left; padding: 0.5rem 0.75rem; background: var(--danger-light); border-radius: 8px; font-weight: 500;"></p>
+                        
+                        <button type="submit" class="btn-auth-register" id="btnAuthRegister" style="width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 10px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.95rem; box-shadow: var(--primary-shadow);">
+                            <i class="fa-solid fa-user-plus"></i> Daftar Akun
+                        </button>
+                    </form>
+                    
+                    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-sub);">
+                        Sudah punya akun? <a href="#" id="linkToLogin" style="color: var(--primary); font-weight: 600; text-decoration: none; transition: color 0.2s;">Masuk di Sini</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-col footer-brand-col anim-slide-left">
+                <a href="#" class="footer-brand">
+                    <i class="fa-solid fa-pepper-hot"></i> Cabe Kami
+                </a>
+                <p class="footer-desc">Toko online resmi hasil panen Fayseri Smart Greenhouse. Data produk disinkronkan langsung dari sistem greenhouse.</p>
+                <div class="footer-socials">
+                    <a href="https://wa.me/6289601572430" target="_blank" rel="noopener" class="social-btn wa" title="Chat WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col anim-fade-up">
+                <h4 class="footer-col-title">Menu</h4>
+                <ul class="footer-links">
+                    <li><a href="#heroSection"><i class="fa-solid fa-chevron-right"></i> Beranda</a></li>
+                    <li><a href="#catalog"><i class="fa-solid fa-chevron-right"></i> Katalog Produk</a></li>
+                    <li><a href="#cara-pesan"><i class="fa-solid fa-chevron-right"></i> Cara Pesan</a></li>
+                </ul>
+            </div>
+            <div class="footer-col anim-fade-up">
+                <h4 class="footer-col-title">Kontak</h4>
+                <ul class="footer-contacts">
+                    <li>
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <a href="https://wa.me/6289601572430" target="_blank" rel="noopener">+62 896-0157-2430</a>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Kebon 9, Sungai Gelam, Muaro Jambi</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Senin – Sabtu, 07.00 – 17.00 WIB</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-col anim-slide-right">
+                <h4 class="footer-col-title">Sistem</h4>
+                <p class="footer-sys-desc">Ditenagai Fayseri Smart Greenhouse v2.1.0</p>
+                <div class="footer-sys-badges">
+                    <span class="sys-badge"><i class="fa-solid fa-microchip"></i> IoT</span>
+                    <span class="sys-badge"><i class="fa-solid fa-cloud"></i> Cloud</span>
+                    <span class="sys-badge"><i class="fa-solid fa-leaf"></i> Presisi</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom anim-fade-up">
+            <p>&copy; 2026 Cabe Kami &bull; <a href="#">Faesa Technology Agriculture System</a></p>
+            <div class="footer-bottom-right">
+                <span>v1.0.0</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== FLOATING WA BUTTON ========== -->
+    <a href="https://wa.me/6289601572430?text=Halo%20Cabe%20Kami%20%F0%9F%8C%B6%EF%B8%8F%2C%20saya%20ingin%20tanya%20produk%20yang%20tersedia!"
+       target="_blank" rel="noopener" class="wa-float" id="waFloat" aria-label="Chat WhatsApp Admin">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="wa-float-text">Chat Admin</span>
+    </a>
+
+    <!-- ========== TOAST NOTIFICATIONS ========== -->
+    <div class="toast-container" id="toastContainer" role="alert" aria-live="polite"></div>
+
+    <!-- ========== MODAL: DETAIL PRODUK ========== -->
+    <div class="modal-overlay" id="modalDetail" role="dialog" aria-modal="true" aria-label="Detail produk">
+        <div class="modal-box modal-product-detail">
+            <button class="modal-close-btn" id="closeModalDetail" aria-label="Tutup">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-detail-content">
+                <div class="modal-img-wrap" id="modalImgWrap">
+                    <div class="product-img-placeholder">
+                        <i class="fa-solid fa-pepper-hot"></i>
+                        <span>Belum ada foto</span>
+                    </div>
+                </div>
+                <div class="modal-detail-info">
+                    <div class="modal-detail-header">
+                        <h3 id="modalProdukNama">Nama Produk</h3>
+                        <span class="modal-stok-badge tag-stok" id="modalStokBadge"></span>
+                    </div>
+                    <div class="modal-price-wrap">
+                        <span class="modal-price" id="modalHarga">Rp —</span>
+                    </div>
+                    <p class="modal-desc" id="modalDeskripsi"></p>
+                    <div class="modal-detail-meta" id="modalMeta"></div>
+                    <div class="modal-actions">
+                        <a href="#" class="btn-order btn-order-modal" id="modalWABtn" target="_blank" rel="noopener">
+                            <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
+                        </a>
+                        <div class="modal-action-row">
+                            <button class="btn-action-sm btn-wishlist-modal" id="modalWishlistBtn">
+                                <i class="fa-regular fa-heart"></i> Favorit
+                            </button>
+                            <button class="btn-action-sm btn-share-modal" id="modalShareBtn">
+                                <i class="fa-solid fa-share-nodes"></i> Bagikan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODAL: DETAIL PANDUAN ========== -->
+    <div class="modal-overlay" id="modalPanduanDetail" role="dialog" aria-modal="true" aria-label="Detail panduan">
+        <div class="modal-box modal-panduan-detail" style="max-width: 650px; border-radius: 20px; overflow-y: auto; max-height: 85vh; position: relative;">
+            <button class="modal-close-btn" id="closeModalPanduanDetail" aria-label="Tutup" style="position: absolute; top: 1.25rem; right: 1.25rem; font-size: 1.25rem; color: var(--text-sub); transition: color 0.2s; z-index: 10;">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--primary), #f59e0b); z-index: 9;"></div>
+
+            <!-- Foto panduan (shown only if available) -->
+            <div id="modalPanduanFotoWrap" style="display:none; margin:0; overflow:hidden; height:240px; border-radius:0;">
+                <img id="modalPanduanFoto" src="" alt="Foto Panduan" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;">
+            </div>
+
+            <div class="modal-detail-content" style="padding: 2.5rem 2rem 2rem 2rem; text-align: left; display: block;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
+                    <span id="modalPanduanKategori" class="category-badge" style="padding: 4px 12px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.35rem; letter-spacing: 0.5px;">
+                        <i class="fa-solid fa-book-open"></i> Kategori
+                    </span>
+                    <span style="font-size: 0.8rem; color: var(--text-sub); display: inline-flex; align-items: center; gap: 0.25rem;">
+                        <i class="fa-regular fa-calendar"></i> <span id="modalPanduanTanggal">—</span>
+                    </span>
+                </div>
+                
+                <h3 id="modalPanduanJudul" style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin-bottom: 1.25rem; line-height: 1.35; font-family: 'Poppins', sans-serif;">
+                    Judul Panduan
+                </h3>
+                
+                <div id="modalPanduanKonten" style="font-size: 0.98rem; color: var(--text-sub); line-height: 1.8; max-height: none; overflow: visible; padding-right: 0.5rem; white-space: pre-wrap; word-break: break-word; font-family: inherit;">
+                    Isi materi panduan...
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========== PANEL: WISHLIST ========== -->
+    <div class="side-panel-overlay" id="wishlistPanelOverlay" role="dialog" aria-modal="true" aria-label="Daftar favorit">
+        <div class="side-panel" id="wishlistPanel">
+            <div class="side-panel-header">
+                <h3><i class="fa-solid fa-heart" style="color:#ef4444;"></i> Favorit Kamu</h3>
+                <button class="modal-close-btn" id="closeWishlistPanel" aria-label="Tutup panel favorit">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="side-panel-body" id="wishlistPanelBody">
+                <div class="panel-empty">
+                    <i class="fa-regular fa-heart"></i>
+                    <p>Belum ada produk favorit</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PANEL: CHAT DENGAN PENJUAL ========== -->
+    <div class="side-panel-overlay" id="chatPanelOverlay" role="dialog" aria-modal="true" aria-label="Chat dengan penjual">
+        <div class="side-panel chat-panel" id="chatSidePanel">
+            <div class="side-panel-header">
+                <h3><i class="fa-solid fa-comment-dots" style="color:var(--primary);"></i> Chat Penjual</h3>
+                <button class="modal-close-btn" id="closeChatPanel" aria-label="Tutup chat">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <!-- State: Belum Login -->
+            <div id="chatStateNotLogged" class="chat-not-logged">
+                <div class="chat-not-logged-icon"><i class="fa-solid fa-comment-dots"></i></div>
+                <h4>Chat dengan Penjual</h4>
+                <p>Hubungi kami langsung via WhatsApp, atau login untuk chat langsung di sini.</p>
+                <a href="https://wa.me/6289601572430?text=Halo%20Cabe%20Kami%20%F0%9F%8C%B6%EF%B8%8F!%20Saya%20ingin%20bertanya%20tentang%20produk."
+                   target="_blank" rel="noopener" class="chat-wa-big">
+                    <i class="fa-brands fa-whatsapp"></i> Chat via WhatsApp
+                </a>
+                <div class="chat-divider">atau</div>
+                <button class="chat-login-btn" id="chatGoToLogin">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login untuk Chat Langsung
+                </button>
+            </div>
+            <!-- State: Sudah Login -->
+            <div id="chatStateLogged" class="chat-logged" style="display:none;">
+                <div class="chat-user-info">
+                    <i class="fa-solid fa-circle" style="font-size:0.45rem; color:#22c55e;"></i>
+                    <span id="chatUserEmail">—</span>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-empty-msg">
+                        <i class="fa-regular fa-comment-dots"></i>
+                        <span>Memuat percakapan...</span>
+                    </div>
+                </div>
+                <div class="chat-input-row">
+                    <input type="text" class="chat-input" id="chatInput"
+                           placeholder="Ketik pesan..." autocomplete="off" maxlength="500">
+                    <button class="chat-send-btn" id="chatSendBtn" aria-label="Kirim">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PANEL: PENGATURAN / KONFIGURASI ========== -->
+    <div class="side-panel-overlay" id="settingsPanelOverlay" role="dialog" aria-modal="true" aria-label="Pengaturan">
+        <div class="side-panel" id="settingsPanel">
+            <div class="side-panel-header">
+                <h3><i class="fa-solid fa-sliders" style="color:var(--primary);"></i> Pengaturan</h3>
+                <button class="modal-close-btn" id="closeSettingsPanel" aria-label="Tutup pengaturan">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="side-panel-body" id="settingsPanelBody">
+
+                <!-- ---- TAMPILAN / TEMA ---- -->
+                <div class="settings-section">
+                    <div class="settings-section-title">
+                        <i class="fa-solid fa-palette"></i> Tampilan
+                    </div>
+                    <div class="theme-options">
+                        <button class="theme-opt" data-theme="faesa" id="themeOptFaesa">
+                            <div class="theme-preview theme-prev-faesa"></div>
+                            <span>Faesa</span>
+                            <i class="fa-solid fa-check theme-check"></i>
+                        </button>
+                        <button class="theme-opt" data-theme="light" id="themeOptLight">
+                            <div class="theme-preview theme-prev-light"></div>
+                            <span>Light</span>
+                            <i class="fa-solid fa-check theme-check"></i>
+                        </button>
+                        <button class="theme-opt" data-theme="dark" id="themeOptDark">
+                            <div class="theme-preview theme-prev-dark"></div>
+                            <span>Dark</span>
+                            <i class="fa-solid fa-check theme-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ---- AKUN PENGGUNA (Opsional) ---- -->
+                <div class="settings-section">
+                    <div class="settings-section-title">
+                        <i class="fa-solid fa-user"></i> Akun <span class="settings-badge-opt">Opsional</span>
+                    </div>
+                    
+                    <!-- Toggle Button untuk Info Akun -->
+                    <button class="btn-settings-action" id="btnToggleAccountInfo" style="margin-bottom: 0.5rem;">
+                        <i class="fa-solid fa-circle-user"></i> Info Akun
+                    </button>
+
+                    <!-- Hidden Container untuk Detail Akun/Login -->
+                    <div id="accountInfoContainer" style="display: none; transition: all 0.3s ease; margin-top: 0.75rem;">
+                        <!-- Status belum login -->
+                        <div id="authStatusLoggedOut">
+                            <p class="settings-note" style="margin-bottom: 0.75rem;">Mendaftar atau masuk ke akun Cabe Kami untuk mendapatkan akses chat interaktif.</p>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <button class="btn-settings-action" id="btnOpenLoginPanel" style="background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-weight: 600;">
+                                    <i class="fa-solid fa-right-to-bracket"></i> Masuk ke Akun
+                                </button>
+                                <button class="btn-settings-action" id="btnOpenRegisterPanel" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-weight: 600;">
+                                    <i class="fa-solid fa-user-plus"></i> Daftar Akun Baru
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Status sudah login -->
+                        <div id="authStatusLoggedIn" style="display:none;">
+                            <div class="auth-logged-in-card" style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); margin-bottom: 0.75rem;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--primary-alpha); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                                    <i class="fa-solid fa-circle-user"></i>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 0.15rem; flex: 1; text-align: left;">
+                                    <strong id="authUserNickname" style="font-size: 0.95rem; color: var(--text-main); display: block;">—</strong>
+                                    <span id="authUserEmail" style="font-size: 0.78rem; color: var(--text-sub); display: block; word-break: break-all;">—</span>
+                                    <span class="auth-role-badge" id="authUserRole" style="font-size: 0.68rem; color: var(--primary); font-weight: 700; text-transform: uppercase; margin-top: 0.15rem; display: inline-block;">Pelanggan</span>
+                                </div>
+                            </div>
+                            <button class="btn-auth-logout" id="btnAuthLogout" style="width: 100%; padding: 10px; border-radius: 8px; background: var(--danger-light); color: var(--danger); border: none; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <i class="fa-solid fa-right-from-bracket"></i> Keluar dari Akun
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ---- AKSES ADMIN DASHBOARD ---- -->
+                <div class="settings-section">
+                    <div class="settings-section-title">
+                        <i class="fa-solid fa-gauge-high"></i> Dashboard Admin
+                    </div>
+                    <!-- Butuh login -->
+                    <div id="dashboardNeedLogin">
+                        <p class="settings-note">Akses Dashboard Fayseri memerlukan login akun admin terlebih dahulu.</p>
+                        <button class="btn-settings-action" id="btnGoLoginFirst">
+                            <i class="fa-solid fa-lock"></i> Login untuk Akses Dashboard
+                        </button>
+                    </div>
+                    <!-- Sudah login, bisa akses -->
+                    <div id="dashboardCanAccess" style="display:none;">
+                        <p class="settings-note">Kamu sudah login. Klik tombol di bawah untuk membuka Dashboard Fayseri.</p>
+                        <a href="./Fayseri/index.html" class="btn-settings-action btn-go-dashboard" id="btnGoDashboard" target="_blank" rel="noopener">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Dashboard Fayseri
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ---- INFO TOKO ---- -->
+                <div class="settings-section settings-section-info">
+                    <div class="settings-info-row">
+                        <span>Versi Toko</span><strong>v1.0.0</strong>
+                    </div>
+                    <div class="settings-info-row">
+                        <span>Sumber Data</span><strong>Fayseri Cloud</strong>
+                    </div>
+                    <div class="settings-info-row">
+                        <span>Status Koneksi</span>
+                        <strong id="connectionStatus"><span class="dot-online"></span> Online</strong>
+                    </div>
+                </div>
+
+            </div><!-- /side-panel-body -->
+        </div>
+    </div>
+
+
+
+    <!-- Mobile Bottom Navigation (Shopee/Tokopedia style) -->
+    <nav class="mobile-bottom-nav">
+        <a href="#heroSection" class="bottom-nav-item active" data-tab="beranda">
+            <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="#catalog" class="bottom-nav-item" data-tab="catalog">
+            <i class="fa-solid fa-store"></i>
+            <span>Katalog</span>
+        </a>
+        <a href="#cara-pesan" class="bottom-nav-item" data-tab="cara-pesan">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <span>Cara Pesan</span>
+        </a>
+        <a href="#panduanSection" class="bottom-nav-item" data-tab="panduan">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Panduan</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-tab="settings">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Akun</span>
+        </a>
+    </nav>
+
+    <!-- Supabase JS SDK v2 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- App Logic -->
+    <script src="app.js"></script>
+
+    <!-- APK Detection and Cool Refresh Button Handler -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Deteksi jika berjalan sebagai aplikasi APK lokal
+            if (window.location.protocol === 'file:') {
+                document.body.classList.add('is-apk');
+                
+                // Cari dan tampilkan semua elemen tombol refresh APK-only
+                const apkButtons = document.querySelectorAll('.apk-only-refresh');
+                apkButtons.forEach(function(btn) {
+                    btn.style.display = 'inline-flex';
+                });
+
+                // Daftarkan aksi klik dengan animasi putar mikro premium
+                const btnApkRefresh = document.getElementById('btnApkRefresh');
+                if (btnApkRefresh) {
+                    btnApkRefresh.addEventListener('click', function() {
+                        const icon = btnApkRefresh.querySelector('i');
+                        if (icon) {
+                            icon.classList.add('fa-spin');
+                        }
+                        // Berikan sedikit jeda untuk animasi sebelum memuat ulang
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 350);
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fayseri - Smart Plant Monitoring Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css?v=2.3.7">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script>
+        (function () {
+            try {
+                const saved = localStorage.getItem('fayseri_theme');
+                const theme = saved ? JSON.parse(saved) : 'faesa';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) { }
+        })();
+    </script>
+</head>
+
+<body>
+    <nav class="top-navbar">
+        <div class="navbar-left">
+            <i class="fa-solid fa-microchip"></i>
+            <span>Fayseri by Faesa</span>
+        </div>
+        <div class="navbar-right">
+            <div class="env-widget">
+                <div class="env-item">
+                    <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i>
+                    <span style="font-size: 12px; font-weight: 500;">Kebon 9</span>
+                </div>
+                <div class="env-item">
+                    <i class="fa-solid fa-temperature-half"></i>
+                    <span id="suhu">--</span><span id="suhuUnit">°C</span>
+                </div>
+                <div class="env-item">
+                    <i class="fa-solid fa-droplet"></i>
+                    <span id="lembab">--</span>%
+                </div>
+            </div>
+            <div class="topbar-clock" id="topbarClock">
+                <i class="fa-solid fa-clock"></i>
+                <span id="clockVal">--:-- WIB</span>
+            </div>
+            <!-- APK-only Cool Refresh Button in Fayseri Top Bar (Kanan Atas) -->
+            <button class="apk-only-refresh" id="btnApkRefresh" title="Refresh Dashboard" style="display: none; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; color: rgba(255, 255, 255, 0.75); font-size: 0.85rem; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s; cursor: pointer; margin-right: 0.35rem;">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+            <div class="user-profile-mini" id="userProfileButton" style="position: relative; cursor: pointer;">
+                <img id="navProfilePhoto" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 21 12 21z'/%3E%3C/svg%3E" alt="Avatar" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255, 255, 255, 0.6); flex-shrink: 0;">
+                <span></span>
+                <div class="user-profile-dropdown" id="userProfileDropdown" style="display: none;">
+                    <a href="#" id="btnProfileSetting"><i class="fa-solid fa-user-gear"></i> Profil Saya</a>
+                    <a href="#" id="btnLogout"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <!-- Animated Glowing Bokeh Circles inside Sidebar -->
+            <div class="sidebar-bg-glows">
+                <div class="sidebar-glow sidebar-glow-1"></div>
+                <div class="sidebar-glow sidebar-glow-2"></div>
+            </div>
+
+            <!-- Highly Visible Background Vector Watermarks (Faesa Theme Only) -->
+            <div class="sidebar-bg-watermark">
+                <i class="fa-solid fa-leaf watermark-icon-1"></i>
+                <i class="fa-solid fa-microchip watermark-icon-2"></i>
+                <i class="fa-solid fa-seedling watermark-icon-3"></i>
+                <i class="fa-solid fa-droplet watermark-icon-4"></i>
+                <i class="fa-solid fa-temperature-half watermark-icon-5"></i>
+                <i class="fa-solid fa-flask watermark-icon-6"></i>
+                <i class="fa-solid fa-cloud-sun watermark-icon-7"></i>
+                <i class="fa-solid fa-bolt watermark-icon-8"></i>
+            </div>
+
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <span>Fayseri</span>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-link active" data-page="dashboardPage">
+                    <i class="fa-solid fa-table-columns"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-link" data-page="jadwalPage">
+                    <i class="fa-solid fa-calendar-plus"></i>
+                    <span>Kelola Jadwal</span>
+                </a>
+                <a href="#" class="menu-link" data-page="analysisPage">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    <span>Analisis Tanaman</span>
+                </a>
+                <a href="#" class="menu-link" data-page="daftarPage">
+                    <i class="fa-solid fa-seedling"></i>
+                    <span>Daftar Tanaman</span>
+                </a>
+                <a href="#" class="menu-link" data-page="stokPage">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <span>Stok & Logistik</span>
+                </a>
+                <a href="#" class="menu-link" data-page="pekerjaPage">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span>Manajemen Pekerja</span>
+                </a>
+                <a href="#" class="menu-link" data-page="kasPage">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Laporan Kas</span>
+                </a>
+                <a href="#" class="menu-link" data-page="produkPage">
+                    <i class="fa-solid fa-store"></i>
+                    <span>Produk Siap Jual</span>
+                </a>
+                <a href="#" class="menu-link" data-page="panduanPage">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Buku Panduan</span>
+                </a>
+                <a href="#" class="menu-link" data-page="profilPage">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Profil Saya</span>
+                </a>
+                <a href="#" class="menu-link" data-page="konfigPage">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Konfigurasi Sistem</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <!-- Aurora Animated Tech-Organic Background -->
+            <div class="dashboard-bg-aurora">
+                <div class="aurora-glow aurora-glow-1"></div>
+                <div class="aurora-glow aurora-glow-2"></div>
+                <div class="aurora-glow aurora-glow-3"></div>
+            </div>
+
+            <!-- Highly Visible Background Vector Watermarks in Main Content (Faesa Theme Only) -->
+            <div class="main-content-bg-watermark">
+                <i class="fa-solid fa-leaf content-watermark-icon-1"></i>
+                <i class="fa-solid fa-seedling content-watermark-icon-2"></i>
+                <i class="fa-solid fa-microchip content-watermark-icon-3"></i>
+                <i class="fa-solid fa-droplet content-watermark-icon-4"></i>
+                <i class="fa-solid fa-flask content-watermark-icon-5"></i>
+                <i class="fa-solid fa-temperature-half content-watermark-icon-6"></i>
+            </div>
+
+            <div class="content-banner"></div>
+
+            <!-- ========== 1. DASHBOARD ========== -->
+            <section id="dashboardPage">
+                <header class="content-header">
+                    <div class="header-info">
+                        <h1>Fayseri</h1>
+                        <p class="page-subtitle subtitle-temp">&nbsp;</p>
+                    </div>
+                    <div class="header-actions">
+                    </div>
+                </header>
+
+                <section class="welcome-banner">
+                    <div class="welcome-content">
+                        <div class="welcome-left">
+                            <span class="welcome-tag"><i class="fa-solid fa-circle-check"></i> Sistem Optimal</span>
+                            <h2 class="welcome-title">Selamat Datang Kembali!</h2>
+                            <p class="welcome-subtitle">Berikut jadwal terdekat untuk greenhouse Anda:</p>
+                            <div class="schedule-box" id="welcomeScheduleBox">
+                                <!-- Diisi via JS secara dinamis -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="welcome-image">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                </section>
+
+                <section class="dashboard-hero-grid">
+                    <div class="stat-card" id="cardJadwalPemupukan">
+                        <div class="card-icon green"><i class="fa-solid fa-jar-wheat"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Jadwal Pemupukan</span>
+                            <h3 class="card-value" id="jadwalPupukVal">0</h3>
+                            <span class="card-trend up" id="jadwalPupukNext"><i class="fa-solid fa-clock"></i> Belum ada
+                                jadwal</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" id="cardJadwalPenyemprotan">
+                        <div class="card-icon orange"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Jadwal Penyemprotan</span>
+                            <h3 class="card-value" id="jadwalSemprotVal">0</h3>
+                            <span class="card-trend up" id="jadwalSemprotNext"><i class="fa-solid fa-clock"></i> Belum ada
+                                jadwal</span>
+                        </div>
+                    </div>
+                </section>
+ 
+                <section class="dashboard-tiles-grid">
+                    <div class="stat-card" id="cardJadwalPenyiraman">
+                        <div class="card-icon blue"><i class="fa-solid fa-faucet-drip"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Jadwal Penyiraman</span>
+                            <h3 class="card-value" id="jadwalPenyiramanVal">0</h3>
+                            <span class="card-trend up" id="jadwalPenyiramanNext"><i class="fa-solid fa-clock"></i> Belum ada
+                                jadwal</span>
+                        </div>
+                    </div>
+                    <div class="stat-card rain-card" data-grid-id="6">
+                        <div class="card-icon orange"><i class="fa-solid fa-cloud-rain"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Prediksi Hujan</span>
+                            <h3 class="card-value" id="rainForecastVal">Memantau...</h3>
+                            <span class="card-trend up" id="rainForecastMeta"><i class="fa-solid fa-cloud-rain"></i>
+                                Sedang memantau...</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-grid-id="1">
+                        <div class="card-icon green"><i class="fa-solid fa-seedling"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Total Tanaman</span>
+                            <h3 class="card-value">--</h3>
+                            <span class="card-trend up"><i class="fa-solid fa-leaf"></i> Memantau...</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-grid-id="5">
+                        <div class="card-icon blue"><i class="fa-solid fa-droplet"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Kelembaban Rata-rata</span>
+                            <h3 class="card-value" id="gridLembabVal">--%</h3>
+                            <span class="card-trend down" id="gridLembabTrend"><i class="fa-solid fa-arrow-down"></i> --</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-grid-id="2">
+                        <div class="card-icon blue"><i class="fa-solid fa-user-astronaut"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Pekerja Lapangan</span>
+                            <h3 class="card-value">--</h3>
+                            <span class="card-trend up"><i class="fa-solid fa-arrow-up"></i> --</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-grid-id="3">
+                        <div class="card-icon green"><i class="fa-solid fa-shield-heart"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Skor Kesehatan</span>
+                            <h3 class="card-value">--%</h3>
+                            <span class="card-trend up"><i class="fa-solid fa-arrow-up"></i> --</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" data-grid-id="4">
+                        <div class="card-icon orange"><i class="fa-solid fa-hourglass-half"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Siklus Panen</span>
+                            <h3 class="card-value">--</h3>
+                            <span class="card-trend down"><i class="fa-solid fa-arrow-down"></i> --</span>
+                        </div>
+                    </div>
+                    <div class="stat-card status-card">
+                        <div class="card-icon purple"><i class="fa-solid fa-seedling"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Status Lapangan</span>
+                            <h3 class="card-value">--</h3>
+                            <span class="card-trend up"><i class="fa-solid fa-check"></i> Memuat...</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Jadwal Hari Ini (Read-Only Timeline) -->
+                <section class="dashboard-schedule-section">
+                    <div class="content-box full-box">
+                        <div class="box-header">
+                            <h3><i class="fa-solid fa-calendar-day"
+                                    style="color:var(--info);margin-right:8px;"></i>Jadwal Tugas Hari Ini</h3>
+                            <a href="#" class="view-all" id="goToKelolajadwal"><i class="fa-solid fa-pen-to-square"
+                                    style="margin-right:4px;"></i>Kelola Jadwal</a>
+                        </div>
+                        <div class="dash-schedule-timeline" id="dashScheduleTimeline">
+                            <div class="dash-schedule-empty" id="dashScheduleEmpty">
+                                <i class="fa-solid fa-calendar-xmark"></i>
+                                <p>Belum ada tugas hari ini</p>
+                                <span>Buat tugas baru di menu <strong>Kelola Jadwal</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="main-grid">
+                    <div class="content-box box-chart">
+                        <div class="box-header">
+                            <h3>Tren Suhu & Kelembaban Udara</h3>
+                        </div>
+                        <div class="chart-area">
+                            <canvas id="kesehatanChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="content-box box-tasks">
+                        <div class="box-header">
+                            <h3>Antrean & Aktivitas</h3>
+                            <a href="#" class="view-all" id="btnLihatSemuaAktivitas">Lihat Semua</a>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="user-avatar">AF</div>
+                                <div class="item-info">
+                                    <strong>Ahmad Faisal Assaudi</strong>
+                                    <p>Selesai melakukan penyemprotan insektisida</p>
+                                </div>
+                                <span class="item-time">Baru saja</span>
+                            </div>
+                            <div class="activity-item">
+                                <div class="user-avatar bg-blue">JS</div>
+                                <div class="item-info">
+                                    <strong>Jane Smith</strong>
+                                    <p>Menambahkan 50 bibit Cabai baru</p>
+                                </div>
+                                <span class="item-time">10 menit</span>
+                            </div>
+                            <div class="activity-item">
+                                <div class="user-avatar bg-green">AI</div>
+                                <div class="item-info">
+                                    <strong>Sistem Fayseri</strong>
+                                    <p>Analisis harian selesai: Kondisi Stabil</p>
+                                </div>
+                                <span class="item-time">1 jam</span>
+                            </div>
+                        </div>
+                        <div class="queue-status">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>0 jadwal tertunda hari ini</span>
+                        </div>
+                    </div>
+                </section>
+
+
+
+
+            </section>
+
+            <!-- ========== KELOLA JADWAL PAGE ========== -->
+            <section id="jadwalPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Kelola Jadwal</h1>
+                        <p class="page-subtitle">Atur jadwal penyiraman untuk setiap blok tanaman</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary" id="btnTambahJadwalPage">
+                            <i class="fa-solid fa-plus"></i> Tambah Jadwal Baru
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="card-icon blue"><i class="fa-solid fa-faucet-drip"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Total Jadwal</span>
+                            <h3 class="card-value" id="jadwalTotalPage">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Jadwal Aktif</span>
+                            <h3 class="card-value" id="jadwalAktifPage">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon orange"><i class="fa-solid fa-pause-circle"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Jadwal Nonaktif</span>
+                            <h3 class="card-value" id="jadwalNonaktifPage">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon purple"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Area Lahan</span>
+                            <h3 class="card-value">--</h3>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Daftar Jadwal (in-page) -->
+                <section class="section-block">
+                    <div class="content-box full-box">
+                        <div class="box-header">
+                            <h3>Daftar Jadwal Penyiraman</h3>
+                        </div>
+                        <div class="watering-list jadwal-page-list" id="jadwalPageList"></div>
+                        <div class="watering-empty" id="jadwalPageEmpty" style="display:none;">
+                            <i class="fa-solid fa-droplet-slash"></i>
+                            <p>Belum ada jadwal</p>
+                            <span>Klik tombol "Tambah Jadwal Baru" untuk membuat jadwal</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modal Tambah/Edit Jadwal -->
+                <div class="modal-overlay" id="modalJadwal">
+                    <div class="modal-box">
+                        <div class="modal-header">
+                            <div class="modal-header-group">
+                                <div class="modal-header-icon modal-header-icon--blue">
+                                    <i class="fa-solid fa-faucet-drip"></i>
+                                </div>
+                                <div>
+                                    <h3 id="modalJadwalTitle">Tambah Jadwal Penyiraman</h3>
+                                    <p class="modal-subtitle">Isi detail jadwal penyiraman</p>
+                                </div>
+                            </div>
+                            <button class="modal-close" id="closeModalJadwal"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <input type="hidden" id="editJadwalId">
+                            <div class="modal-form-grid">
+                                <div class="form-group">
+                                    <label for="jadwalAktivitas">Tipe Aktivitas <span
+                                            style="color:var(--danger)">*</span></label>
+                                    <select id="jadwalAktivitas" class="form-input">
+                                        <option value="Penyiraman">Penyiraman</option>
+                                        <option value="Pemberian Fungisida">Pemberian Fungisida</option>
+                                        <option value="Pemberian Insektisida">Pemberian Insektisida</option>
+                                        <option value="Pemupukan">Pemupukan / Nutrisi</option>
+                                        <option value="Pemeliharaan">Pemeliharaan / Lainnya</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="jadwalPenanggung">Penanggung Jawab</label>
+                                <select id="jadwalPenanggung" class="form-input">
+                                    <option value="">-- Pilih Pekerja --</option>
+                                    <option value="Ahmad Faisal">Ahmad Faisal</option>
+                                    <option value="Jane Smith">Jane Smith</option>
+                                    <option value="Budi Santoso">Budi Santoso</option>
+                                    <option value="Rina Wati">Rina Wati</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Hari <span style="color:var(--danger)">*</span></label>
+                                <div class="day-picker" id="dayPicker">
+                                    <button type="button" class="day-btn" data-day="Senin">Sen</button>
+                                    <button type="button" class="day-btn" data-day="Selasa">Sel</button>
+                                    <button type="button" class="day-btn" data-day="Rabu">Rab</button>
+                                    <button type="button" class="day-btn" data-day="Kamis">Kam</button>
+                                    <button type="button" class="day-btn" data-day="Jumat">Jum</button>
+                                    <button type="button" class="day-btn" data-day="Sabtu">Sab</button>
+                                    <button type="button" class="day-btn" data-day="Minggu">Min</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="jadwalCatatan">Catatan / Keterangan</label>
+                                <input type="text" id="jadwalCatatan" class="form-input"
+                                    placeholder="Catatan opsional...">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn-cancel" id="cancelModalJadwal">Batal</button>
+                            <button class="btn-primary" id="simpanJadwal"
+                                style="background:linear-gradient(135deg,#3B82F6,#1D4ED8);box-shadow:0 2px 8px rgba(59,130,246,0.3);">
+                                <i class="fa-solid fa-check"></i> Simpan Jadwal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== 2. ANALISIS TANAMAN ========== -->
+            <section id="analysisPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Analisis Tanaman</h1>
+                        <p class="page-subtitle">Monitoring kondisi tanaman secara real-time</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary" id="btnTambahAnalisis"><i class="fa-solid fa-plus"></i> Tambah Data Analisis</button>
+                        <button class="btn-primary" id="btnScanSensor"><i class="fa-solid fa-microscope"></i> Mulai Scan</button>
+                        <button class="btn-icon-outline" id="btnRefreshAnalisis"><i class="fa-solid fa-arrows-rotate"></i></button>
+                    </div>
+                </div>
+                <div id="analysisMessage" style="display:none; padding:12px 16px; border-radius:12px; margin-bottom:20px; font-weight:600; font-size:13.5px; text-align:center; transition: all 0.3s ease;"></div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="card-icon green"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Skor Kesehatan</span>
+                            <h3 class="card-value">--%</h3>
+                            <span class="card-trend up"><i class="fa-solid fa-arrow-up"></i> --</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon blue"><i class="fa-solid fa-ruler-vertical"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Tinggi Rata-rata</span>
+                            <h3 class="card-value">--</h3>
+                            <span class="card-trend up">--</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon orange"><i class="fa-solid fa-virus"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Deteksi Penyakit</span>
+                            <h3 class="card-value">--</h3>
+                            <span class="card-trend down">--</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon purple"><i class="fa-solid fa-flask"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Status Nutrisi</span>
+                            <h3 class="card-value">--</h3>
+                            <span class="card-trend up">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-grid">
+                    <div class="content-box box-chart">
+                        <div class="box-header">
+                            <h3>Grafik Pertumbuhan Mingguan</h3>
+                            <button class="btn-text">Mingguan <i class="fa-solid fa-chevron-down"></i></button>
+                        </div>
+                        <div class="chart-area">
+                            <canvas id="analysisChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="content-box box-tasks">
+                        <div class="box-header">
+                            <h3>Rekomendasi Sistem</h3>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="user-avatar bg-green"><i class="fa-solid fa-check"></i></div>
+                                <div class="item-info">
+                                    <strong>Semprot Fungisida</strong>
+                                    <p>Rekomendasi: 2ml/liter air, sore hari</p>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="user-avatar bg-blue"><i class="fa-solid fa-check"></i></div>
+                                <div class="item-info">
+                                    <strong>Kurangi Kelembaban</strong>
+                                    <p>Buka ventilasi greenhouse pagi hari</p>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="user-avatar"><i class="fa-solid fa-check"></i></div>
+                                <div class="item-info">
+                                    <strong>Cek Daun Harian</strong>
+                                    <p>Periksa bercak daun pada bagian bawah</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="section-block">
+                    <div class="content-box full-box">
+                        <div class="box-header">
+                            <h3>Detail Analisis Per Blok</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Varietas Cabai</th>
+                                        <th>Tinggi (cm)</th>
+                                        <th>Jumlah Daun</th>
+                                        <th>Warna Daun</th>
+                                        <th>Gejala</th>
+                                        <th>Skor</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="analysisTableBody">
+                                    <!-- Diisi via JS secara dinamis -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ========== 3. DAFTAR TANAMAN ========== -->
+            <section id="daftarPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Daftar Tanaman</h1>
+                        <p class="page-subtitle">Kelola seluruh data tanaman di lahan</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary" id="btnTambahTanaman"><i class="fa-solid fa-plus"></i> Tambah
+                            Tanaman</button>
+                        <button class="btn-icon-outline"><i class="fa-solid fa-filter"></i></button>
+                        <button class="btn-icon-outline"><i class="fa-solid fa-file-export"></i></button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="card-icon green"><i class="fa-solid fa-seedling"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Total Tanaman</span>
+                            <h3 class="card-value" id="tanamanTotalVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon blue"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Lokasi Pemantauan</span>
+                            <h3 class="card-value" id="tanamanBlokVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon purple"><i class="fa-solid fa-leaf"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Varietas</span>
+                            <h3 class="card-value" id="tanamanVarietasVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Perlu Perhatian</span>
+                            <h3 class="card-value" id="tanamanPerhatianVal">--</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="section-block">
+                    <div class="content-box full-box">
+                        <div class="box-header">
+                            <h3>Grid Tanaman</h3>
+                            <div class="box-tools">
+                                <input type="text" placeholder="Cari tanaman..." class="search-input">
+                            </div>
+                        </div>
+                        <div class="tanaman-grid" id="tanamanGrid"></div>
+                    </div>
+                </section>
+
+                <section class="section-block">
+                    <div class="content-box full-box">
+                        <div class="box-header">
+                            <h3>Data Tanaman Aktif</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Varietas</th>
+                                        <th>Jumlah</th>
+                                        <th>Tanggal Tanam</th>
+                                        <th>Umur</th>
+                                        <th>Fase</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="daftarTanamanTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ========== 4. STOK & LOGISTIK ========== -->
+            <section id="stokPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Stok & Logistik</h1>
+                        <p class="page-subtitle">Kelola persediaan bahan dan peralatan</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary" id="btnTambahStok"><i class="fa-solid fa-plus"></i> Tambah
+                            Stok</button>
+                        <button class="btn-icon-outline"><i class="fa-solid fa-print"></i></button>
+                        <button class="btn-icon-outline"><i class="fa-solid fa-file-export"></i></button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="card-icon green"><i class="fa-solid fa-box"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Total Item</span>
+                            <h3 class="card-value" id="stokTotalVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Stok Menipis</span>
+                            <h3 class="card-value" id="stokMenipisVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon red"><i class="fa-solid fa-ban"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Stok Habis</span>
+                            <h3 class="card-value" id="stokHabisVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon blue"><i class="fa-solid fa-money-bill-wave"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Nilai Stok</span>
+                            <h3 class="card-value" id="stokNilaiVal">--</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="section-block">
+                    <div class="content-box full-box">
+                        <div class="box-header">
+                            <h3>Daftar Stok Gudang</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Kode</th>
+                                        <th>Nama Barang</th>
+                                        <th>Kategori</th>
+                                        <th>Jumlah</th>
+                                        <th>Satuan</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stokTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ========== 5. MANAJEMEN PEKERJA ========== -->
+            <section id="pekerjaPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Manajemen Pekerja</h1>
+                        <p class="page-subtitle">Kelola data dan jadwal pekerja lapangan</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary" id="btnTambahPekerja"><i class="fa-solid fa-user-plus"></i> Tambah
+                            Pekerja</button>
+                        <button class="btn-icon-outline"><i class="fa-solid fa-file-export"></i></button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="card-icon blue"><i class="fa-solid fa-users"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Total Pekerja</span>
+                            <h3 class="card-value" id="pekerjaTotalVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon green"><i class="fa-solid fa-user-check"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Aktif Hari Ini</span>
+                            <h3 class="card-value" id="pekerjaAktifVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon orange"><i class="fa-solid fa-clipboard-list"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Tugas Selesai</span>
+                            <h3 class="card-value" id="pekerjaTugasVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon purple"><i class="fa-solid fa-star"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Kinerja Rata-rata</span>
+                            <h3 class="card-value" id="pekerjaKinerjaVal">--%</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="section-block">
+                    <div class="content-box full-box">
+                        <div class="box-header">
+                            <h3>Data Pekerja Lapangan</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nama</th>
+                                        <th>Divisi</th>
+                                        <th>Status</th>
+                                        <th>Tugas Hari Ini</th>
+                                        <th>Kinerja</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pekerjaTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ========== 6. LAPORAN KAS ========== -->
+            <section id="kasPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Laporan Kas</h1>
+                        <p class="page-subtitle">Arus kas masuk dan keluar operasional</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary" id="btnTambahKas"><i class="fa-solid fa-plus"></i> Catat
+                            Transaksi</button>
+                        <button class="btn-icon-outline"><i class="fa-solid fa-file-export"></i></button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="card-icon green"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Pemasukan Bulan Ini</span>
+                            <h3 class="card-value" id="kasPemasukanVal">--</h3>
+                            <span class="card-trend up"><i class="fa-solid fa-arrow-up"></i> --</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon red"><i class="fa-solid fa-arrow-up"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Pengeluaran Bulan Ini</span>
+                            <h3 class="card-value" id="kasPengeluaranVal">--</h3>
+                            <span class="card-trend down"><i class="fa-solid fa-arrow-down"></i> --</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon blue"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Saldo Bersih</span>
+                            <h3 class="card-value" id="kasSaldoVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon purple"><i class="fa-solid fa-receipt"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Total Transaksi</span>
+                            <h3 class="card-value" id="kasTotalVal">--</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="section-block">
+                    <div class="content-box full-box">
+                        <div class="box-header">
+                            <h3>Riwayat Transaksi</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Keterangan</th>
+                                        <th>Kategori</th>
+                                        <th>Tipe</th>
+                                        <th>Jumlah</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="kasTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ========== 9. PRODUK SIAP JUAL ========== -->
+            <section id="produkPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Produk Siap Jual</h1>
+                        <p class="page-subtitle">Kelola produk hasil panen siap jual untuk toko online Anda</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary btn-sm" id="btnTambahProduk"><i class="fa-solid fa-plus"></i> Tambah Produk Baru</button>
+                        <button class="btn-icon-outline btn-sm" id="btnRefreshProduk"><i class="fa-solid fa-arrows-rotate"></i></button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="card-icon green"><i class="fa-solid fa-store"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Total Produk</span>
+                            <h3 class="card-value" id="produkTotalVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon blue"><i class="fa-solid fa-weight-scale"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Total Stok Siap Jual</span>
+                            <h3 class="card-value" id="produkTotalStokVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon purple"><i class="fa-solid fa-circle-check"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Produk Aktif/Tersedia</span>
+                            <h3 class="card-value" id="produkActiveVal">--</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="card-data">
+                            <span class="card-label">Stok Habis</span>
+                            <h3 class="card-value" id="produkOutOfStockVal">--</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="section-block">
+                    <div class="content-box full-box">
+                        <div class="box-header">
+                            <h3>Katalog Produk Toko Online</h3>
+                        </div>
+                        <div class="tanaman-grid" id="produkGrid"></div>
+                        <div class="watering-empty" id="produkEmpty" style="display:none;">
+                            <i class="fa-solid fa-store-slash"></i>
+                            <p>Belum ada produk siap jual</p>
+                            <span>Klik "Tambah Produk Baru" untuk merilis produk hasil panen pertama Anda.</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ========== 7. PROFIL SAYA ========== -->
+            <section id="profilPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Profil Saya</h1>
+                        <p class="page-subtitle">Kelola informasi akun pengguna</p>
+                    </div>
+                    <div class="header-actions" style="display: flex; gap: 10px;">
+                        <button class="btn-primary btn-sm" id="btnEditProfil"><i class="fa-solid fa-user-pen"></i> Edit Profil</button>
+                        <button class="btn-icon-outline btn-sm" id="btnBatalEditProfil" style="display: none;"><i class="fa-solid fa-xmark"></i> Batal</button>
+                        <button class="btn-primary btn-sm" id="btnSimpanProfil" style="display: none;"><i class="fa-solid fa-save"></i> Simpan Perubahan</button>
+                    </div>
+                </div>
+                <div id="profileMessage" style="display:none; padding:12px 16px; border-radius:12px; margin-bottom:20px; font-weight:600; font-size:13.5px; text-align:center; transition: all 0.3s ease;"></div>
+
+                <!-- PROFILE BANNER CARD START -->
+                <div class="profile-card-banner">
+                    <div class="profile-avatar-wrapper">
+                        <img id="profilePhotoPreview" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 21 12 21z'/%3E%3C/svg%3E" alt="Foto Profil" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                        <label id="profilePhotoInputLabel" for="profilePhotoInput" class="profile-photo-label">
+                            <i class="fa-solid fa-camera" style="font-size: 10px;"></i>
+                        </label>
+                        <input type="file" id="profilePhotoInput" accept="image/*" style="display: none;" disabled>
+                    </div>
+                    
+                    <div class="profile-header-info">
+                        <h2 id="profileHeaderName">Admin Fayseri</h2>
+                        <p id="profileHeaderJabatan">Administrator</p>
+                        <div class="profile-header-meta">
+                            <span id="profileHeaderEmail"><i class="fa-solid fa-envelope"></i>--</span>
+                            <span id="profileHeaderTelp"><i class="fa-solid fa-phone"></i>--</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- PROFILE BANNER CARD END -->
+
+                <div class="main-grid">
+                    <div class="content-box">
+                        <div class="box-header">
+                            <h3>Informasi Pribadi</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="profileNama" value="" placeholder="Masukkan nama lengkap" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Panggilan</label>
+                            <input type="text" id="profilePanggilan" value="" placeholder="Masukkan nama panggilan" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="profileEmail" value="" placeholder="nama@domain.com" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Telepon</label>
+                            <input type="tel" id="profileTelp" value="" placeholder="Masukkan nomor telepon" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Alamat</label>
+                            <textarea id="profileAlamat" class="form-input"
+                                rows="3" placeholder="Masukkan alamat lengkap" disabled></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Jabatan</label>
+                            <input type="text" id="profileJabatan" value="" placeholder="Masukkan jabatan" class="form-input" disabled>
+                        </div>
+                    </div>
+
+                    <!-- PORTOFOLIO & PENGALAMAN CARD START -->
+                    <div class="content-box">
+                        <div class="box-header">
+                            <h3>Portofolio & Pengalaman</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>Pengalaman Tani / Pengelolaan Lahan</label>
+                            <input type="text" id="profilePengalaman" value="" placeholder="Contoh: 5 Tahun Pengelola Greenhouse" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Keahlian Utama</label>
+                            <input type="text" id="profileKeahlian" value="" placeholder="Contoh: Sistem Irigasi Tetes, Hama Cabai, Hidroponik" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Sertifikasi & Pelatihan</label>
+                            <input type="text" id="profileSertifikasi" value="" placeholder="Contoh: Sertifikasi GAP (Good Agricultural Practices)" class="form-input" disabled>
+                        </div>
+                    </div>
+                    <!-- PORTOFOLIO & PENGALAMAN CARD END -->
+                    <div class="content-box">
+                        <div class="box-header">
+                            <h3>Keamanan Akun</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>Password Lama</label>
+                            <input type="password" id="profilePassLama" placeholder="Masukkan password lama"
+                                class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Password Baru</label>
+                            <input type="password" id="profilePassBaru" placeholder="Masukkan password baru"
+                                class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Konfirmasi Password</label>
+                            <input type="password" id="profilePassKonf" placeholder="Ulangi password baru"
+                                class="form-input" disabled>
+                        </div>
+                        <div class="box-header" style="margin-top:24px;">
+                            <h3>Notifikasi</h3>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="item-info">
+                                    <strong>Email Notifikasi</strong>
+                                    <p>Terima laporan harian via email</p>
+                                </div>
+                                <input type="checkbox" id="notifEmail" checked disabled>
+                            </div>
+                            <div class="activity-item">
+                                <div class="item-info">
+                                    <strong>Peringatan Stok</strong>
+                                    <p>Notifikasi saat stok menipis</p>
+                                </div>
+                                <input type="checkbox" id="notifStok" checked disabled>
+                            </div>
+                            <div class="activity-item">
+                                <div class="item-info">
+                                    <strong>Peringatan Penyakit</strong>
+                                    <p>Notifikasi saat deteksi penyakit</p>
+                                </div>
+                                <input type="checkbox" id="notifPenyakit" checked disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== 8. KONFIGURASI SISTEM ========== -->
+            <section id="konfigPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Konfigurasi Sistem</h1>
+                        <p class="page-subtitle">Pengaturan umum sistem Fayseri</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary btn-sm" id="btnSimpanKonfig"><i class="fa-solid fa-save"></i> Simpan</button>
+                        <button class="btn-icon-outline btn-sm" id="btnResetKonfig"><i class="fa-solid fa-rotate-left"></i></button>
+                    </div>
+                </div>
+                <div id="konfigMessage" style="display:none; padding:12px 16px; border-radius:12px; margin-bottom:20px; font-weight:600; font-size:13.5px; text-align:center; transition: all 0.3s ease;"></div>
+
+                <div class="main-grid">
+                    <div class="content-box">
+                        <div class="box-header">
+                            <h3>Pengaturan Umum</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Lahan</label>
+                            <input type="text" id="configNamaLahan" value="Kebun Cabai Faesa" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Lokasi Lahan</label>
+                            <input type="text" id="configLokasiLahan" value="Malang, Jawa Timur" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Zona Waktu</label>
+                            <select id="configZonaWaktu" class="form-input">
+                                <option selected>WIB (UTC+7)</option>
+                                <option>WITA (UTC+8)</option>
+                                <option>WIT (UTC+9)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Satuan Suhu</label>
+                            <select id="configSatuanSuhu" class="form-input">
+                                <option selected>Celsius (°C)</option>
+                                <option>Fahrenheit (°F)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="configTemaAplikasi">Tema Aplikasi</label>
+                            <select id="configTemaAplikasi" class="form-input">
+                                <option value="faesa">Faesa (Default)</option>
+                                <option value="light">Mode Terang (Light)</option>
+                                <option value="dark">Mode Gelap (Dark)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="content-box">
+                        <div class="box-header">
+                            <h3>Tentang Sistem</h3>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="item-info">
+                                    <strong>Versi Aplikasi</strong>
+                                    <p>Fayseri v2.1.0</p>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="item-info">
+                                    <strong>Terakhir Diperbarui</strong>
+                                    <p>20 Juni 2025</p>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="item-info">
+                                    <strong>Pengembang</strong>
+                                    <p>Tim Faesa Technology</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== CARD INTEGRASI TOKO ONLINE ===== -->
+                    <div class="content-box" style="grid-column: 1 / -1;">
+                        <div class="box-header" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+                            <h3 style="display:flex; align-items:center; gap:8px;">
+                                <i class="fa-solid fa-store" style="color: var(--primary);"></i>
+                                Integrasi Toko Online
+                            </h3>
+                            <a href="../index.html"
+                               style="display:inline-flex; align-items:center; gap:8px;
+                                      background: linear-gradient(135deg, #25D366, #128C7E);
+                                      color: #ffffff; padding: 8px 18px; border-radius: 50px;
+                                      font-size: 13px; font-weight: 600; text-decoration: none;
+                                      transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(37,211,102,0.25);"
+                               onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 18px rgba(37,211,102,0.4)';"
+                               onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 12px rgba(37,211,102,0.25)';"
+                               target="_blank">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                Buka Toko Online
+                            </a>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="item-icon" style="background: rgba(37,211,102,0.1); color: #128C7E; border-radius: 8px; width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <div class="item-info">
+                                    <strong>Cabe Kami — Toko Online Fayseri</strong>
+                                    <p>Website toko online yang terhubung langsung dengan data produk siap jual dari sistem ini.</p>
+                                </div>
+                                <div style="flex-shrink:0;">
+                                    <span style="background: rgba(34,197,94,0.1); color: #15803d; border: 1px solid rgba(34,197,94,0.2); padding: 3px 10px; border-radius: 50px; font-size: 11px; font-weight: 600;">
+                                        ● Live
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="item-icon" style="background: var(--primary-light); color: var(--primary); border-radius: 8px; width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
+                                    <i class="fa-solid fa-rotate"></i>
+                                </div>
+                                <div class="item-info">
+                                    <strong>Sinkronisasi Otomatis</strong>
+                                    <p>Setiap produk yang kamu tambahkan/edit di menu "Produk Siap Jual" akan langsung tampil di toko online secara real-time.</p>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="item-icon" style="background: rgba(245,158,11,0.1); color: #d97706; border-radius: 8px; width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
+                                    <i class="fa-solid fa-palette"></i>
+                                </div>
+                                <div class="item-info">
+                                    <strong>Sinkronisasi Tema</strong>
+                                    <p>Tema yang dipilih di dropdown "Tema Aplikasi" di atas akan ikut diterapkan ke toko online saat dikunjungi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ===== END CARD TOKO ONLINE ===== -->
+
+                    <!-- ===== CARD CHAT PEMBELI ===== -->
+                    <div class="content-box" style="grid-column: 1 / -1;">
+                        <div class="box-header" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+                            <h3 style="display:flex; align-items:center; gap:8px;">
+                                <i class="fa-solid fa-comments" style="color: var(--primary);"></i>
+                                Chat Pembeli
+                            </h3>
+                            <button id="btnBukaChatAdmin"
+                               style="display:inline-flex; align-items:center; gap:8px;
+                                      background: var(--primary); color: #fff;
+                                      padding: 8px 18px; border-radius: 50px;
+                                      font-size: 13px; font-weight: 600; border:none; cursor:pointer;
+                                      transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(13,110,253,0.25);"
+                               onmouseover="this.style.background='var(--primary-dark)'; this.style.transform='translateY(-2px)';"
+                               onmouseout="this.style.background='var(--primary)'; this.style.transform='';">
+                                <i class="fa-solid fa-comments"></i>
+                                Buka Chat Pembeli
+                            </button>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="item-icon" style="background: var(--primary-light); color: var(--primary); border-radius: 8px; width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
+                                    <i class="fa-solid fa-message"></i>
+                                </div>
+                                <div class="item-info">
+                                    <strong>Pesan Masuk dari Toko Online</strong>
+                                    <p>Pembeli yang login di toko online dapat mengirim pesan langsung. Balasan kamu akan muncul di chat mereka.</p>
+                                </div>
+                                <div style="flex-shrink:0;">
+                                    <span id="adminChatUnreadBadge" style="background: var(--primary-light); color: var(--primary); border: 1px solid rgba(13,110,253,0.2); padding: 3px 10px; border-radius: 50px; font-size: 11px; font-weight: 600;">
+                                        Periksa
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ===== END CARD CHAT PEMBELI ===== -->
+
+                </div>
+            </section>
+
+            <!-- ========== 10. BUKU PANDUAN ========== -->
+            <section id="panduanPage" style="display:none;">
+                <div class="content-header">
+                    <div class="header-info">
+                        <h1>Buku Panduan</h1>
+                        <p class="page-subtitle">Kelola isi buku panduan pertanian untuk toko online</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary btn-sm" id="btnTambahPanduan"><i class="fa-solid fa-plus"></i> Tambah Panduan Baru</button>
+                        <button class="btn-icon-outline btn-sm" id="btnRefreshPanduan"><i class="fa-solid fa-arrows-rotate"></i></button>
+                    </div>
+                </div>
+                <div id="panduanMessage" style="display:none; padding:12px 16px; border-radius:12px; margin-bottom:20px; font-weight:600; font-size:13.5px; text-align:center; transition: all 0.3s ease;"></div>
+
+                <div class="content-box full-box">
+                    <div class="box-header">
+                        <h3>Daftar Materi Panduan</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 70px; text-align: center;">Foto</th>
+                                    <th>Judul Panduan</th>
+                                    <th>Kategori</th>
+                                    <th>Isi Ringkas</th>
+                                    <th>Tanggal Dibuat</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="panduanTableBody">
+                                <!-- Diisi via JS secara dinamis -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== MODAL ADMIN CHAT ===== -->
+            <div class="modal-overlay" id="modalAdminChat" style="align-items:center; justify-content:center;">
+                <div class="modal-box" style="width:100%; max-width:720px; max-height:90vh; display:flex; flex-direction:column; overflow:hidden;">
+                    <div class="modal-header">
+                        <div class="modal-header-group">
+                            <div class="modal-header-icon" style="background:var(--primary-light); color:var(--primary);">
+                                <i class="fa-solid fa-comments"></i>
+                            </div>
+                            <div>
+                                <h3 class="modal-title">Chat Pembeli</h3>
+                                <p class="modal-subtitle">Percakapan masuk dari toko online Cabe Kami</p>
+                            </div>
+                        </div>
+                        <button class="modal-close" id="closeModalAdminChat"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body" style="display:flex; gap:0; padding:0; flex:1; overflow:hidden; min-height:400px;">
+                        <!-- Daftar Pembeli -->
+                        <div id="adminChatBuyerList" style="width:220px; border-right:1px solid var(--border-color); overflow-y:auto; flex-shrink:0;">
+                            <div style="padding:12px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--gray-400); border-bottom:1px solid var(--border-color);">
+                                Pembeli
+                            </div>
+                            <div id="adminBuyerListContent" style="padding:8px;">
+                                <p style="font-size:12px; color:var(--gray-400); text-align:center; padding:24px 8px;">Memuat...</p>
+                            </div>
+                        </div>
+                        <!-- Area Chat -->
+                        <div style="flex:1; display:flex; flex-direction:column; min-width:0;">
+                            <div id="adminSelectedBuyer" style="padding:10px 16px; font-size:12px; color:var(--gray-400); border-bottom:1px solid var(--border-color); display:flex; align-items:center; gap:8px;">
+                                <i class="fa-solid fa-user-circle"></i>
+                                <span id="adminSelectedBuyerEmail">Pilih pembeli di kiri</span>
+                            </div>
+                            <div id="adminChatMessages" style="flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px;">
+                                <p style="font-size:12px; color:var(--gray-400); text-align:center; margin-top:40px;">
+                                    <i class="fa-regular fa-comment-dots" style="font-size:2rem; display:block; margin-bottom:8px; opacity:0.3;"></i>
+                                    Pilih pembeli untuk melihat percakapan
+                                </p>
+                            </div>
+                            <div style="padding:12px 16px; border-top:1px solid var(--border-color); display:flex; gap:8px;">
+                                <input type="text" id="adminChatReplyInput" placeholder="Ketik balasan..." maxlength="500"
+                                    style="flex:1; padding:8px 14px; border:1px solid var(--border-color); border-radius:50px; font-size:13px; color:var(--gray-800); background:var(--gray-100); outline:none; font-family:var(--font-sans);"
+                                    onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border-color)'">
+                                <button id="adminChatSendBtn" onclick="AdminChat.send()"
+                                    style="width:36px; height:36px; border-radius:50%; background:var(--primary); color:#fff; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; transition:all 0.2s;">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ===== END MODAL ADMIN CHAT ===== -->
+
+            <script>
+            // ===== ADMIN CHAT MODULE (Inline) =====
+            const AdminChat = {
+                CHAT_KEY: 'fayseri_chat_messages',
+                selectedUserId: null,
+                selectedEmail: null,
+                pollingTimer: null,
+
+                async openModal() {
+                    document.getElementById('modalAdminChat').classList.add('show');
+                    await this.loadBuyerList();
+                    this.startPolling();
+                },
+                closeModal() {
+                    document.getElementById('modalAdminChat').classList.remove('show');
+                    this.stopPolling();
+                },
+
+                async loadBuyerList() {
+                    const listEl = document.getElementById('adminBuyerListContent');
+                    if (!listEl || !supabaseClient) return;
+                    try {
+                        const { data } = await supabaseClient
+                            .from('fayseri_storage')
+                            .select('user_id, value_data, updated_at')
+                            .eq('key_name', this.CHAT_KEY)
+                            .order('updated_at', { ascending: false });
+
+                        if (!data || !data.length) {
+                            listEl.innerHTML = '<p style="font-size:12px; color:var(--gray-400); text-align:center; padding:24px 8px;">Belum ada pesan masuk</p>';
+                            return;
+                        }
+                        listEl.innerHTML = data.map(row => {
+                            const msgs = row.value_data || [];
+                            const lastMsg = msgs[msgs.length - 1];
+                            const email = lastMsg?.email || 'Pembeli';
+                            const shortEmail = email.length > 22 ? email.substring(0, 19) + '...' : email;
+                            const isSelected = row.user_id === this.selectedUserId;
+                            return `<div onclick="AdminChat.selectBuyer('${row.user_id}', '${email}')"
+                                style="padding:10px; border-radius:8px; cursor:pointer; margin-bottom:4px;
+                                       background:${isSelected ? 'var(--primary-light)' : 'transparent'};
+                                       border:1px solid ${isSelected ? 'rgba(13,110,253,0.2)' : 'transparent'};"
+                                onmouseover="if('${row.user_id}'!=='${this.selectedUserId}') this.style.background='var(--gray-100)'"
+                                onmouseout="if('${row.user_id}'!=='${this.selectedUserId}') this.style.background='transparent'">
+                                <div style="font-size:12px; font-weight:600; color:var(--gray-800); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${shortEmail}</div>
+                                <div style="font-size:11px; color:var(--gray-400); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${lastMsg?.text?.substring(0,30) || '—'}...</div>
+                            </div>`;
+                        }).join('');
+                    } catch(e) { console.warn('Admin chat list error:', e); }
+                },
+
+                async selectBuyer(userId, email) {
+                    this.selectedUserId = userId;
+                    this.selectedEmail  = email;
+                    const emailEl = document.getElementById('adminSelectedBuyerEmail');
+                    if (emailEl) emailEl.textContent = email;
+                    await this.loadMessages();
+                    await this.loadBuyerList(); // refresh highlight
+                },
+
+                async loadMessages() {
+                    const msgsEl = document.getElementById('adminChatMessages');
+                    if (!msgsEl || !this.selectedUserId || !supabaseClient) return;
+                    try {
+                        const { data } = await supabaseClient
+                            .from('fayseri_storage')
+                            .select('value_data')
+                            .eq('user_id', this.selectedUserId)
+                            .eq('key_name', this.CHAT_KEY)
+                            .limit(1);
+                        const messages = data?.[0]?.value_data || [];
+                        if (!messages.length) {
+                            msgsEl.innerHTML = '<p style="text-align:center; color:var(--gray-400); font-size:12px; margin-top:40px;">Belum ada pesan</p>';
+                            return;
+                        }
+                        msgsEl.innerHTML = messages.map(msg => {
+                            const isAdmin = msg.from === 'admin';
+                            const time = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'}) : '';
+                            return `<div style="display:flex; flex-direction:column; align-items:${isAdmin ? 'flex-end' : 'flex-start'};">
+                                <div style="max-width:75%; padding:8px 12px; border-radius:12px; font-size:13px; line-height:1.5;
+                                            background:${isAdmin ? 'var(--primary)' : 'var(--gray-100)'};
+                                            color:${isAdmin ? '#fff' : 'var(--gray-800)'};
+                                            border-bottom-${isAdmin ? 'right' : 'left'}-radius:3px;">
+                                    ${msg.text}
+                                </div>
+                                <div style="font-size:11px; color:var(--gray-400); margin-top:3px; padding:0 3px;">
+                                    ${isAdmin ? 'Admin' : 'Pembeli'} · ${time}
+                                </div>
+                            </div>`;
+                        }).join('');
+                        msgsEl.scrollTop = msgsEl.scrollHeight;
+                    } catch(e) { console.warn('Admin chat load error:', e); }
+                },
+
+                async send() {
+                    const input = document.getElementById('adminChatReplyInput');
+                    const text = input?.value.trim();
+                    if (!text || !this.selectedUserId || !supabaseClient) return;
+                    const btn = document.getElementById('adminChatSendBtn');
+                    if (btn) btn.disabled = true;
+                    input.value = '';
+                    try {
+                        const { data } = await supabaseClient
+                            .from('fayseri_storage')
+                            .select('value_data')
+                            .eq('user_id', this.selectedUserId)
+                            .eq('key_name', this.CHAT_KEY)
+                            .limit(1);
+                        const messages = data?.[0]?.value_data || [];
+                        messages.push({ id:`adm-${Date.now()}`, from:'admin', text, timestamp:new Date().toISOString() });
+                        await supabaseClient.from('fayseri_storage').upsert({
+                            user_id: this.selectedUserId,
+                            key_name: this.CHAT_KEY,
+                            value_data: messages,
+                            updated_at: new Date().toISOString()
+                        }, { onConflict: 'user_id,key_name' });
+                        await this.loadMessages();
+                    } catch(e) { console.warn('Admin send error:', e); }
+                    finally { if (btn) btn.disabled = false; }
+                },
+
+                startPolling() {
+                    this.stopPolling();
+                    this.pollingTimer = setInterval(async () => {
+                        await this.loadBuyerList();
+                        if (this.selectedUserId) await this.loadMessages();
+                    }, 8000);
+                },
+                stopPolling() {
+                    if (this.pollingTimer) { clearInterval(this.pollingTimer); this.pollingTimer = null; }
+                }
+            };
+
+            document.getElementById('btnBukaChatAdmin')?.addEventListener('click', () => AdminChat.openModal());
+            document.getElementById('closeModalAdminChat')?.addEventListener('click', () => AdminChat.closeModal());
+            document.getElementById('modalAdminChat')?.addEventListener('click', (e) => {
+                if (e.target === document.getElementById('modalAdminChat')) AdminChat.closeModal();
+            });
+            document.getElementById('adminChatReplyInput')?.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); AdminChat.send(); }
+            });
+            </script>
+
+
+
+            <!-- ========== MODAL DAFTAR TANAMAN ========== -->
+            <div class="modal-overlay" id="modalTanaman">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <div class="modal-header-group">
+                            <div class="modal-header-icon modal-header-icon--green">
+                                <i class="fa-solid fa-seedling"></i>
+                            </div>
+                            <div>
+                                <h3 id="modalTanamanTitle">Tambah Tanaman</h3>
+                                <p class="modal-subtitle">Kelola data tanaman aktif</p>
+                            </div>
+                        </div>
+                        <button class="modal-close" id="closeModalTanaman"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editTanamanKey">
+                        <!-- PLANT PHOTO UPLOAD START -->
+                        <div class="form-group" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px;">
+                            <label style="align-self: flex-start; font-weight: 600;">Foto Tanaman <span style="font-weight: normal; color: var(--gray-500); font-size: 12px;">(Opsional, format gambar, otomatis dikompresi)</span></label>
+                            <div style="position: relative; width: 100%; height: 160px; border-radius: 12px; border: 2px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; overflow: hidden; background: rgba(255,255,255,0.02); cursor: pointer; transition: border-color 0.2s;" id="tanamanUploadZone">
+                                <img id="tanamanFotoPreview" src="" alt="Preview Tanaman" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+                                <div id="tanamanFotoPlaceholder" style="display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--gray-400);">
+                                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 32px; color: var(--primary);"></i>
+                                    <span style="font-size: 12px; font-weight: 500;">Klik untuk unggah foto tanaman</span>
+                                </div>
+                                <input type="file" id="tanamanFotoInput" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                        <!-- PLANT PHOTO UPLOAD END -->
+                        <div class="form-group">
+                            <label for="tanamanVarietas">Varietas <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="tanamanVarietas" class="form-input"
+                                placeholder="cth: Cabai Rawit Merah">
+                        </div>
+                        <div class="form-group">
+                            <label for="tanamanJumlah">Jumlah <span style="color:var(--danger)">*</span></label>
+                            <input type="number" id="tanamanJumlah" class="form-input" min="1" value="1"
+                                placeholder="cth: 20">
+                        </div>
+                        <div class="form-group">
+                            <label for="tanamanTanggal">Tanggal Tanam <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="tanamanTanggal" class="form-input" placeholder="cth: 12 Mei 2025">
+                        </div>
+                        <div class="form-group">
+                            <label for="tanamanUmur">Umur <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="tanamanUmur" class="form-input" placeholder="cth: 45 Hari">
+                        </div>
+                        <div class="form-group">
+                            <label for="tanamanFase">Fase Pertumbuhan <span style="color:var(--danger)">*</span></label>
+                            <select id="tanamanFase" class="form-input">
+                                <option value="Vegetatif">Vegetatif</option>
+                                <option value="Generatif">Generatif</option>
+                                <option value="Awal Vegetatif">Awal Vegetatif</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tanamanStatus">Status <span style="color:var(--danger)">*</span></label>
+                            <select id="tanamanStatus" class="form-input">
+                                <option value="Sehat">Sehat</option>
+                                <option value="Waspada">Waspada</option>
+                                <option value="Sakit">Sakit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel" id="cancelModalTanaman">Batal</button>
+                        <button class="btn-primary" id="simpanTanaman"
+                            style="background:linear-gradient(135deg,#10B981,#059669);">
+                            <i class="fa-solid fa-check"></i> Simpan Tanaman
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== MODAL ANALISIS TANAMAN ========== -->
+            <div class="modal-overlay" id="modalAnalisis">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <div class="modal-header-group">
+                            <div class="modal-header-icon modal-header-icon--green">
+                                <i class="fa-solid fa-microscope"></i>
+                            </div>
+                            <div>
+                                <h3 id="modalAnalisisTitle">Tambah Data Analisis</h3>
+                                <p class="modal-subtitle">Kelola hasil analisis tanaman per blok</p>
+                            </div>
+                        </div>
+                        <button class="modal-close" id="closeModalAnalisis"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editAnalisisKey">
+                        <div class="form-group">
+                            <label for="analisisVarietas">Varietas Cabai <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="analisisVarietas" class="form-input" placeholder="cth: Cabai Rawit Merah">
+                        </div>
+                        <div class="form-group">
+                            <label for="analisisTinggi">Tinggi (cm) <span style="color:var(--danger)">*</span></label>
+                            <input type="number" id="analisisTinggi" class="form-input" placeholder="cth: 35">
+                        </div>
+                        <div class="form-group">
+                            <label for="analisisDaun">Jumlah Daun <span style="color:var(--danger)">*</span></label>
+                            <input type="number" id="analisisDaun" class="form-input" placeholder="cth: 20">
+                        </div>
+                        <div class="form-group">
+                            <label for="analisisWarna">Warna Daun <span style="color:var(--danger)">*</span></label>
+                            <select id="analisisWarna" class="form-input">
+                                <option value="Hijau Segar">Hijau Segar</option>
+                                <option value="Kuning Muda">Kuning Muda</option>
+                                <option value="Kuning Tua">Kuning Tua</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="analisisGejala">Gejala Penyakit <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="analisisGejala" class="form-input" placeholder="cth: Tidak ada, bercak daun">
+                        </div>
+                        <div class="form-group">
+                            <label for="analisisSkor">Skor Kesehatan (%) <span style="color:var(--danger)">*</span></label>
+                            <input type="number" id="analisisSkor" class="form-input" min="0" max="100" placeholder="cth: 95">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel" id="cancelModalAnalisis">Batal</button>
+                        <button class="btn-primary" id="simpanAnalisis" style="background:linear-gradient(135deg,#10B981,#059669);">
+                            <i class="fa-solid fa-check"></i> Simpan Analisis
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== MODAL BUKU PANDUAN ========== -->
+            <div class="modal-overlay" id="modalPanduan">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <div class="modal-header-group">
+                            <div class="modal-header-icon modal-header-icon--green">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <div>
+                                <h3 id="modalPanduanTitle">Tambah Panduan Baru</h3>
+                                <p class="modal-subtitle">Kelola isi buku panduan menanam</p>
+                            </div>
+                        </div>
+                        <button class="modal-close" id="closeModalPanduan"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editPanduanKey">
+                        <div class="form-group">
+                            <label for="panduanJudul">Judul Panduan <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="panduanJudul" class="form-input" placeholder="cth: Cara Menyemprot Cabai yang Benar">
+                        </div>
+                        <div class="form-group">
+                            <label for="panduanKategori">Kategori <span style="color:var(--danger)">*</span></label>
+                            <select id="panduanKategori" class="form-input">
+                                <option value="Cara Menanam">Cara Menanam</option>
+                                <option value="Cara Menyemprot">Cara Menyemprot</option>
+                                <option value="Penyebab Cabai Keriting">Penyebab Cabai Keriting</option>
+                                <option value="Lainnya">Lainnya</option>
+                                <option value="KUSTOM">-- Tambah Kategori Baru --</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="groupKategoriKustom" style="display:none;">
+                            <label for="panduanKategoriKustom">Nama Kategori Baru <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="panduanKategoriKustom" class="form-input" placeholder="cth: Perawatan Hama Daun">
+                        </div>
+                        <div class="form-group">
+                            <label for="panduanKonten">Isi Panduan <span style="color:var(--danger)">*</span></label>
+                            <textarea id="panduanKonten" class="form-input" rows="8" placeholder="Masukkan langkah-langkah atau penjelasan panduan lengkap di sini..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Foto Panduan <span style="font-size:11px;color:var(--gray-400);font-weight:400;">(opsional)</span></label>
+                            <div id="panduanFotoDropzone" style="border:2px dashed var(--border-color);border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;background:var(--bg-card);">
+                                <div id="panduanFotoPreviewWrap" style="display:none;margin-bottom:0.75rem;">
+                                    <img id="panduanFotoPreview" src="" alt="Preview" style="max-width:100%;max-height:200px;border-radius:8px;object-fit:cover;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                                </div>
+                                <div id="panduanFotoPlaceholder">
+                                    <i class="fa-solid fa-image" style="font-size:2rem;color:var(--gray-300);margin-bottom:0.5rem;display:block;"></i>
+                                    <p style="font-size:13px;color:var(--gray-400);margin:0;">Klik atau seret foto ke sini</p>
+                                    <p style="font-size:11px;color:var(--gray-300);margin-top:4px;">JPG, PNG, WEBP • Maks 2MB</p>
+                                </div>
+                            </div>
+                            <input type="file" id="panduanFotoInput" accept="image/*" style="display:none;">
+                            <div style="display:flex;gap:8px;margin-top:8px;">
+                                <button type="button" id="btnHapusPanduanFoto" style="display:none;font-size:12px;color:var(--danger);background:none;border:1px solid var(--danger);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;transition:all 0.2s;" onclick="BukuPanduan.clearFoto()">
+                                    <i class="fa-solid fa-trash"></i> Hapus Foto
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel" id="cancelModalPanduan">Batal</button>
+                        <button class="btn-primary" id="simpanPanduan" style="background:linear-gradient(135deg,#10B981,#059669);">
+                            <i class="fa-solid fa-check"></i> Simpan Panduan
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== MODAL STOK ========== -->
+            <div class="modal-overlay" id="modalStok">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <div class="modal-header-group">
+                            <div class="modal-header-icon modal-header-icon--orange">
+                                <i class="fa-solid fa-boxes-stacked"></i>
+                            </div>
+                            <div>
+                                <h3 id="modalStokTitle">Tambah Stok Gudang</h3>
+                                <p class="modal-subtitle">Atur persediaan logistik</p>
+                            </div>
+                        </div>
+                        <button class="modal-close" id="closeModalStok"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editStokKey">
+                        <div class="form-group">
+                            <label for="stokNama">Nama Barang <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="stokNama" class="form-input" placeholder="cth: Insektisida Provado">
+                        </div>
+                        <div class="form-group">
+                            <label for="stokKategori">Kategori <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="stokKategori" class="form-input" placeholder="cth: Pestisida">
+                        </div>
+                        <div class="form-group">
+                            <label for="stokJumlah">Jumlah <span style="color:var(--danger)">*</span></label>
+                            <input type="number" id="stokJumlah" class="form-input" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="stokSatuan">Satuan <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="stokSatuan" class="form-input" placeholder="cth: Liter, Kg, Buah">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel" id="cancelModalStok">Batal</button>
+                        <button class="btn-primary" id="simpanStok"
+                            style="background:linear-gradient(135deg,#F59E0B,#D97706);">
+                            <i class="fa-solid fa-check"></i> Simpan Stok
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== MODAL MANAJEMEN PEKERJA ========== -->
+            <div class="modal-overlay" id="modalPekerja">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <div class="modal-header-group">
+                            <div class="modal-header-icon modal-header-icon--purple">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </div>
+                            <div>
+                                <h3 id="modalPekerjaTitle">Tambah Pekerja</h3>
+                                <p class="modal-subtitle">Atur data pekerja lapangan</p>
+                            </div>
+                        </div>
+                        <button class="modal-close" id="closeModalPekerja"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editPekerjaId">
+                        <div class="form-group">
+                            <label for="pekerjaCode">ID Pekerja <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="pekerjaCode" class="form-input" placeholder="cth: PK-01">
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaNama">Nama Lengkap <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="pekerjaNama" class="form-input" placeholder="cth: Ahmad Faisal">
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaDivisi">Divisi <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="pekerjaDivisi" class="form-input"
+                                placeholder="cth: Proteksi Tanaman">
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaStatus">Status <span style="color:var(--danger)">*</span></label>
+                            <select id="pekerjaStatus" class="form-input">
+                                <option value="Aktif">Aktif</option>
+                                <option value="Izin">Izin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaTugas">Tugas Hari Ini</label>
+                            <input type="text" id="pekerjaTugas" class="form-input"
+                                placeholder="cth: Penyemprotan Insektisida">
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaKinerja">Kinerja (%) <span style="color:var(--danger)">*</span></label>
+                            <input type="number" id="pekerjaKinerja" class="form-input" min="0" max="100" value="90">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel" id="cancelModalPekerja">Batal</button>
+                        <button class="btn-primary" id="simpanPekerja"
+                            style="background:linear-gradient(135deg,#6366F1,#4F46E5);">
+                            <i class="fa-solid fa-check"></i> Simpan Pekerja
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== MODAL LAPORAN KAS ========== -->
+            <div class="modal-overlay" id="modalKas">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <div class="modal-header-group">
+                            <div class="modal-header-icon modal-header-icon--green">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                            <div>
+                                <h3 id="modalKasTitle">Catat Transaksi Kas</h3>
+                                <p class="modal-subtitle">Rekam arus kas masuk/keluar</p>
+                            </div>
+                        </div>
+                        <button class="modal-close" id="closeModalKas"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editKasId">
+                        <div class="form-group">
+                            <label for="kasTanggal">Tanggal <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="kasTanggal" class="form-input" placeholder="cth: 25 Jun 2025">
+                        </div>
+                        <div class="form-group">
+                            <label for="kasKeterangan">Keterangan <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="kasKeterangan" class="form-input"
+                                placeholder="cth: Penjualan Cabai 5kg">
+                        </div>
+                        <div class="form-group">
+                            <label for="kasKategori">Kategori <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="kasKategori" class="form-input" placeholder="cth: Penjualan">
+                        </div>
+                        <div class="form-group">
+                            <label for="kasTipe">Tipe Transaksi <span style="color:var(--danger)">*</span></label>
+                            <select id="kasTipe" class="form-input">
+                                <option value="Masuk">Masuk (Pemasukan)</option>
+                                <option value="Keluar">Keluar (Pengeluaran)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="kasJumlah">Jumlah (Rupiah) <span style="color:var(--danger)">*</span></label>
+                            <input type="number" id="kasJumlah" class="form-input" min="1" placeholder="cth: 750000">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel" id="cancelModalKas">Batal</button>
+                        <button class="btn-primary" id="simpanKas"
+                            style="background:linear-gradient(135deg,#10B981,#059669);">
+                            <i class="fa-solid fa-check"></i> Simpan Transaksi
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== MODAL PRODUK SIAP JUAL ========== -->
+            <div class="modal-overlay" id="modalProduk">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <div class="modal-header-group">
+                            <div class="modal-header-icon modal-header-icon--blue">
+                                <i class="fa-solid fa-store"></i>
+                            </div>
+                            <div>
+                                <h3 id="modalProdukTitle">Tambah/Edit Produk</h3>
+                                <p class="modal-subtitle">Atur detail produk hasil panen untuk toko online</p>
+                            </div>
+                        </div>
+                        <button class="modal-close" id="closeModalProduk"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editProdukKey">
+                        
+                        <!-- PRODUCT PHOTO UPLOAD -->
+                        <div class="form-group" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px;">
+                            <label style="align-self: flex-start; font-weight: 600;">Foto Produk <span style="font-weight: normal; color: var(--gray-500); font-size: 12px;">(Opsional, format gambar, otomatis dikompresi)</span></label>
+                            <div style="position: relative; width: 100%; height: 160px; border-radius: 12px; border: 2px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; overflow: hidden; background: rgba(255,255,255,0.02); cursor: pointer; width: 100%;" id="produkUploadZone">
+                                <img id="produkFotoPreview" src="" alt="Preview Produk" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+                                <div id="produkFotoPlaceholder" style="display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--gray-400);">
+                                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 32px; color: var(--primary);"></i>
+                                    <span style="font-size: 12px; font-weight: 500;">Klik untuk unggah foto produk</span>
+                                </div>
+                                <input type="file" id="produkFotoInput" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="produkNama">Nama Produk <span style="color:var(--danger)">*</span></label>
+                            <input type="text" id="produkNama" class="form-input" placeholder="cth: Cabai Rawit Premium segar">
+                        </div>
+                        <div class="form-group">
+                            <label for="produkStok">Stok Tersedia</label>
+                            <input type="text" id="produkStok" class="form-input" placeholder="cth: 15 Kg, 50 Pohon, Tersedia, atau kosongkan">
+                        </div>
+                        <div class="modal-form-grid">
+                            <div class="form-group">
+                                <label for="produkHarga">Harga Jual (Rp)</label>
+                                <input type="number" id="produkHarga" class="form-input" min="0" placeholder="cth: 35000 (opsional)">
+                            </div>
+                            <div class="form-group">
+                                <label for="produkStatus">Status <span style="color:var(--danger)">*</span></label>
+                                <select id="produkStatus" class="form-input">
+                                    <option value="Tersedia">Tersedia</option>
+                                    <option value="Habis">Habis</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="produkDeskripsi">Deskripsi Produk</label>
+                            <textarea id="produkDeskripsi" class="form-input" rows="3" placeholder="Deskripsi singkat produk untuk toko online..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel" id="cancelModalProduk">Batal</button>
+                        <button class="btn-primary" id="simpanProduk" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8);">
+                            <i class="fa-solid fa-check"></i> Simpan Produk
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== MODAL AKTIVITAS DAN ANTREAN ========== -->
+            <div class="modal-overlay" id="modalAktivitas">
+                <div class="modal-box" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <div class="modal-header-group">
+                            <div class="modal-header-icon modal-header-icon--violet">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                            </div>
+                            <div>
+                                <h3>Riwayat Aktivitas & Antrean</h3>
+                                <p class="modal-subtitle">Semua log sistem dan tindakan pekerja</p>
+                            </div>
+                        </div>
+                        <button class="modal-close" id="closeModalAktivitas"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+                        <div class="activity-list" id="fullActivityList">
+                            <!-- Diisi via JS -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel" id="closeModalAktivitasBtn">Tutup</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </main>
+    </div>
+    <!-- ========== LOGIN/REGISTER OVERLAY ========== -->
+    <div id="loginOverlay" class="login-overlay" style="display: none;">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <h2>Fayseri Admin</h2>
+                <p id="loginSubtitle">Silakan masuk ke panel admin pertanian</p>
+            </div>
+            
+            <!-- FORM LOGIN -->
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="loginEmail">Email Admin</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="nama@fayseri.id" required class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required class="form-input">
+                    </div>
+                </div>
+                <button type="submit" class="btn-login" id="btnLoginSubmit">
+                    <span>Masuk</span> <i class="fa-solid fa-right-to-bracket"></i>
+                </button>
+                <div class="login-footer">
+                    Belum punya akun? <a href="#" id="btnSwitchToRegister">Daftar Sekarang</a>
+                </div>
+            </form>
+
+            <!-- FORM REGISTER -->
+            <form id="registerForm" class="login-form" style="display: none;">
+                <div class="form-group">
+                    <label for="registerNama">Nama Lengkap</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="registerNama" placeholder="Ahmad Faisal" required class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="registerEmail" placeholder="nama@fayseri.id" required class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="registerPassword" placeholder="Minimal 6 karakter" required class="form-input">
+                    </div>
+                </div>
+                <button type="submit" class="btn-login btn-register" id="btnRegisterSubmit">
+                    <span>Daftar Akun</span> <i class="fa-solid fa-user-plus"></i>
+                </button>
+                <div class="login-footer">
+                    Sudah punya akun? <a href="#" id="btnSwitchToLogin">Masuk</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+
+    <!-- APK Detection and Cool Refresh Button Handler -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Deteksi jika berjalan sebagai aplikasi APK lokal
+            if (window.location.protocol === 'file:') {
+                document.body.classList.add('is-apk');
+                
+                // Cari dan tampilkan semua elemen tombol refresh APK-only
+                const apkButtons = document.querySelectorAll('.apk-only-refresh');
+                apkButtons.forEach(function(btn) {
+                    btn.style.display = 'inline-flex';
+                });
+
+                // Daftarkan aksi klik dengan animasi putar mikro premium
+                const btnApkRefresh = document.getElementById('btnApkRefresh');
+                if (btnApkRefresh) {
+                    btnApkRefresh.addEventListener('click', function() {
+                        const icon = btnApkRefresh.querySelector('i');
+                        if (icon) {
+                            icon.classList.add('fa-spin');
+                        }
+                        // Berikan sedikit jeda untuk animasi sebelum memuat ulang
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 350);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

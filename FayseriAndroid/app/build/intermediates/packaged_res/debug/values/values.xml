@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#10B981</color>
+    <color name="bg_card">#1E293B</color>
+    <color name="bg_main">#0F172A</color>
+    <color name="black">#FF000000</color>
+    <color name="ic_launcher_background">#0F172A</color>
+    <color name="primary">#6366F1</color>
+    <color name="primary_dark">#4F46E5</color>
+    <color name="primary_light">#818CF8</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">Fayseri</string>
+    <style name="Theme.Fayseri" parent="Theme.AppCompat.DayNight.NoActionBar">
+        
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        
+        
+        <item name="android:windowBackground">@color/bg_main</item>
+    </style>
+    <style name="Theme.Fayseri.Fullscreen" parent="Theme.Fayseri">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        
+        
+        <item name="android:statusBarColor">@color/bg_main</item>
+        <item name="android:navigationBarColor">@color/bg_main</item>
+    </style>
+</resources>

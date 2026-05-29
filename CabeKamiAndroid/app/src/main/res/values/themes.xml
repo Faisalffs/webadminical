@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.CabeKami" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/bg_main</item>
+    </style>
+
+    <!-- Fullscreen WebView Theme -->
+    <style name="Theme.CabeKami.Fullscreen" parent="Theme.CabeKami">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        
+        <!-- Menyesuaikan bilah status (status bar) agar menyatu secara transparan & premium -->
+        <item name="android:statusBarColor">@color/primary</item> <!-- Biru Terang default topbar -->
+        <item name="android:navigationBarColor">@color/bg_main</item>
+    </style>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Palet warna disinkronkan dengan tema Faesa & Gelap Premium Fayseri -->
+    <color name="primary">#6366F1</color> <!-- Indigo Modern -->
+    <color name="primary_dark">#4F46E5</color> <!-- Deep Indigo -->
+    <color name="primary_light">#818CF8</color> <!-- Light Indigo -->
+    <color name="bg_main">#0F172A</color> <!-- Slate 900 (Latar belakang gelap premium) -->
+    <color name="bg_card">#1E293B</color> <!-- Slate 800 -->
+    <color name="accent">#10B981</color> <!-- Emerald Green -->
+    
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Background untuk adaptive icon Fayseri -->
+    <color name="ic_launcher_background">#0F172A</color>
+</resources>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="faesa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO & Meta Tags according to Blueprint -->
+  <title>CabeKami — Cabe Segar Greenhouse IoT dari Jambi</title>
+  <meta name="description" content="CabeKami adalah produsen cabe segar berbasis teknologi greenhouse IoT di Jambi. Cabe merah, rawit, dan hijau segar langsung dari kebun, tanpa perantara. Bebas pestisida berlebih, konsisten, dan dikirim hari ini.">
+  <meta name="keywords" content="cabe segar, beli cabe, greenhouse, cabe merah, cabe rawit, Jambi, CabeKami, Fayseri">
+  <meta name="author" content="Fayseri Development Team">
+
+  <!-- Open Graph (Facebook, WhatsApp preview) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CabeKami — Cabe Segar Langsung dari Greenhouse">
+  <meta property="og:description" content="Cabe segar bebas pestisida berlebih, dipanen dari greenhouse IoT milik Fayseri.">
+  <meta property="og:image" content="https://cabekami.id/assets/images/og-image.jpg">
+  <meta property="og:url" content="https://cabekami.id">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CabeKami — Cabe Segar Greenhouse IoT">
+  <meta name="twitter:description" content="Cabe segar dari greenhouse Fayseri, teknologi IoT, langsung ke tangan Anda.">
+
+  <!-- PWA metadata -->
+  <meta name="theme-color" content="#0d6efd">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CabeKami">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌶️</text></svg>">
+
+  <!-- Structured Data (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "CabeKami",
+    "description": "Produsen cabe segar berbasis teknologi greenhouse IoT di Jambi",
+    "url": "https://cabekami.id",
+    "telephone": "+6289601572430",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Jambi",
+      "addressCountry": "ID"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "500"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Topbar info (selalu tampil) -->
+  <div id="topbar"></div>
+
+  <!-- Navbar (selalu tampil) -->
+  <nav id="navbar"></nav>
+
+  <!-- Area konten utama — di-swap oleh router -->
+  <main id="app">
+    <div class="page-loader">
+      <div class="spinner"></div>
+    </div>
+  </main>
+
+  <!-- Footer (selalu tampil) -->
+  <footer id="footer"></footer>
+
+  <!-- Komponen global -->
+  <div id="chat-widget"></div>
+  <button id="back-to-top" aria-label="Kembali ke atas" style="display: none;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <div id="toast-container"></div>
+  <div id="cookie-notice"></div>
+
+  <!-- Modal Lightbox -->
+  <div id="lightbox-modal" class="modal" style="display: none;">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-image" src="" alt="">
+  </div>
+
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Aplikasi SPA -->
+  <script src="app.js"></script>
+</body>
+</html>
